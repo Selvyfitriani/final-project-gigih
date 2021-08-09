@@ -30,6 +30,7 @@ CREATE TABLE comments (
     post_id INT,
     words VARCHAR(1000),
     hashtags VARCHAR(100),
+    attachment TEXT,    
 
     FOREIGN KEY(post_id) REFERENCES posts(id),
     PRIMARY KEY(id)

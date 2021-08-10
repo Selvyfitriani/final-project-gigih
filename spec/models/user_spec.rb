@@ -13,5 +13,16 @@ describe User do
                 expect(user.valid?).to eq(true)
             end
         end
+
+        context 'when initialized with invalid input' do
+            it 'should return false' do
+                user = User.new(
+                    username = "",
+                    email = "",
+                    bio_description = "",
+                )
+                expect(user.valid?).to eq(false)
+            end
+        end
     end
 end

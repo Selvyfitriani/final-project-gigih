@@ -7,9 +7,9 @@ class User
     end
 
     def valid?
-        return false if @username.nil?
-        return false if @email.nil?
-        return false if @bio_description.nil?
+        return false if @username.empty?
+        return false if @email.empty?
+        return false if @bio_description.empty?
         return true
     end
 end

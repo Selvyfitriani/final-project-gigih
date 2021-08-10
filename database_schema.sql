@@ -6,7 +6,7 @@ CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(30) NOT NULL,
     email VARCHAR(40) NOT NULL,
-    bio_description VARCHAR(150),
+    bio_description VARCHAR(150) NOT NULL,
 
     PRIMARY KEY(id)
 );

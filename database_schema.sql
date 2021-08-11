@@ -1,5 +1,5 @@
 -- CREATE DATABASE
--- CREATE DATABASE social_media_db;
+CREATE DATABASE social_media_db;
 
 -- CREATE TABLE 1: USERS
 CREATE TABLE users (

@@ -4,7 +4,7 @@ require './models/user'
 
 describe User do
     describe '#valid?' do
-        context 'when initialized with valid input' do
+        context 'when initialized with valid attributes value' do
             it 'should return true' do
                 user = User.new(
                     username = 'selvyfitriani31',
@@ -15,7 +15,7 @@ describe User do
             end
         end
 
-        context 'when initialized with invalid input' do
+        context 'when initialized with invalid attributes value' do
             it 'should return false' do
                 user = User.new(
                     username = "",
@@ -39,7 +39,7 @@ describe User do
     end
 
     describe '#save' do 
-        context 'when initialized with valid input' do
+        context 'when initialized with valid attributes value' do
             it 'should save to database' do
                 user = User.new(
                     username = 'selvyfitriani31',

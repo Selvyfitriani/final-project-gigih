@@ -1,3 +1,5 @@
+require "./database/db_connector"
+
 class User
 
     # Source valid email regex: https://www.youtube.com/watch?v=Ch-KRivqmzU

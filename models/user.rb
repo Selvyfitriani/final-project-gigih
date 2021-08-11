@@ -49,4 +49,29 @@ class User
         client.query("INSERT INTO users(username, email, bio_description) " +
             "VALUES('#{@username}', '#{@email}', '#{bio_description}')")
     end
+
+    def self.get_last_insert_id
+        client = create_db_client()
+        raw_data = client.query("SELECT MAX(id) as id FROM users")
+
+        raw_data.each do |datum|
+            return datum["id"].to_i
+        end    
+    end
+
+    def self.find_by_id(id)
+        client = create_db_client
+        raw_data = client.query("SELECT * FROM users WHERE id = #{id}")
+        
+        user = nil
+        raw_data.each do |datum|
+            user = User.new(
+                username = datum["username"], 
+                email = datum["email"], 
+                bio_description = datum["bio_description"]
+            )
+        end
+
+        user
+    end
 end

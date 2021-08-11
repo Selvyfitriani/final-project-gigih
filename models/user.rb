@@ -20,8 +20,10 @@ class User
             d. So, (\.[a-z]+)*\.[a-z]+ means last part must contain at least second domain
     RegexExplanation
 
-    VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+    attr_accessor :username, :email, :bio_description
 
+    VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+        
     def initialize(id=nil, username, email, bio_description)
         @id = id
         @username = username
@@ -38,5 +40,11 @@ class User
 
     def valid_email? 
         return @email =~ VALID_EMAIL_REGEX
+    end
+
+    def save
+        client = create_db_client
+        client.query("INSERT INTO users(username, email, bio_description) " +
+            "VALUES('#{@username}', '#{@email}', '#{bio_description}')")
     end
 end

@@ -43,6 +43,8 @@ class User
     end
 
     def save
+        return false if !valid?
+
         client = create_db_client
         client.query("INSERT INTO users(username, email, bio_description) " +
             "VALUES('#{@username}', '#{@email}', '#{bio_description}')")

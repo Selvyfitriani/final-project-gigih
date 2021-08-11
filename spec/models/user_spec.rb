@@ -57,5 +57,17 @@ describe User do
                 user.save
             end
         end
+
+        context 'when initialized with invalid attributes value' do
+            it 'should return false' do
+                user = User.new(
+                    username = '',
+                    email = "@gmail.com",  
+                    bio_description = '',
+                )
+
+                expect(user.save).to eq(false)
+            end
+        end
     end
 end

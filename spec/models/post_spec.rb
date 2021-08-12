@@ -49,5 +49,17 @@ describe Post do
                 expect(post.valid?).to eq(false)
             end
         end
+
+        context 'when initialized with out of range datetime' do
+            it 'should return false' do
+                post = Post.new(
+                    user_id = 1,
+                    text = "A new post",
+                    datetime = "2021-13-21 22:30:05"
+                )
+
+                expect(post.valid?).to eq(false)
+            end
+        end
     end
 end

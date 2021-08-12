@@ -44,4 +44,8 @@ class Post
         
         return true
     end
+
+    def generate_hashtags
+        return []
+    end
 end

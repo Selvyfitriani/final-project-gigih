@@ -74,4 +74,20 @@ describe Post do
             end
         end
     end
+
+    describe '#generate_hashtags' do
+        context 'when text has no hashtags' do
+            it 'should return empty list' do
+                post = Post.new(
+                    user_id = 1,
+                    text = "A new post",
+                    datetime = "2021-12-31 24:00:05"
+                )
+            
+                hashtags = post.generate_hashtags()
+                expected_hashtags = []
+                expect(hashtags).to eq(expected_hashtags)
+            end
+        end 
+    end
 end

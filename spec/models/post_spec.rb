@@ -13,5 +13,17 @@ describe Post do
                 expect(post.valid?).to eq(true)
             end
         end
+
+        context 'when initialized with invalid user id' do
+            it 'should return false' do
+                post = Post.new(
+                    user_id = "a",
+                    text = "A new post",
+                    time = "10-08-2021"
+                )
+
+                expect(post.valid?).to eq(false)
+            end
+        end
     end
 end

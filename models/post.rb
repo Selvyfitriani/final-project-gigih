@@ -8,7 +8,7 @@ class Post
     
     def valid?
         return false if !valid_user_id?
-        return false if @text.empty?
+        return false if !valid_text?
         return false if @time.empty?
         return true
     end
@@ -17,5 +17,11 @@ class Post
         return false if !@user_id.is_a? Integer
         return false if @user_id < 0
         return true 
+    end
+
+    def valid_text?
+        return false if @text.empty?
+        return false if @text.length > 1000
+        return true
     end
 end

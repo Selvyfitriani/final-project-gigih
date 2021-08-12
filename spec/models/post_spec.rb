@@ -25,5 +25,17 @@ describe Post do
                 expect(post.valid?).to eq(false)
             end
         end
+
+        context 'when initialized with too long text' do
+            it 'should return false' do
+                post = Post.new(
+                    user_id = 1,
+                    text = "a"*1001,
+                    time = "10-08-2021"
+                )
+
+                expect(post.valid?).to eq(false)
+            end
+        end
     end
 end

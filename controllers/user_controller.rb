@@ -1,4 +1,5 @@
 require "./models/user"
+require "json"
 
 class UserController
     def create(params)
@@ -7,6 +8,14 @@ class UserController
             email = params["email"],
             bio_description = params["bio_description"]
         )
-        user.save
+        response = {}
+
+        if user.save
+            response["status_code"] = "201"
+            response["message"] = "Successfully insert user to database"
+        end
+        
+        response = JSON.generate(response)
+        response
     end
 end        

@@ -50,6 +50,8 @@ class User
         client = create_db_client
         client.query("INSERT INTO users(username, email, bio_description) " +
             "VALUES('#{@username}', '#{@email}', '#{bio_description}')")
+        
+        return true
     end
 
     def self.get_last_insert_id

@@ -34,15 +34,23 @@ class User
     end
 
     def valid?
-        return false if @username.empty?
+        return false if (!valid_username?)
         return false if (!valid_email?)
-        return false if @bio_description.empty?
+        return false if (!valid_bio?)
         return true
+    end
+
+    def valid_username?
+        return !@username.empty? && @username.length <= 30
     end
 
     def valid_email? 
         return @email =~ VALID_EMAIL_REGEX
     end
+
+    def valid_bio?
+        return !@bio_description.empty? && @bio_description.length <= 150
+    end    
 
     def save
         return false if !valid?

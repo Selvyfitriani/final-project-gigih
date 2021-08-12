@@ -33,18 +33,14 @@ class Post
         
         # datetime = [yyyy-mm-dd hh:mm:ss]
         year = @datetime[0,4]
-        month = @datetime[5,7]
-        day = @datetime[8,10]
-        hour = @datetime[11,13]
-        minute = @datetime[14,16]
-        second = @datetime[17,19]
+        month = @datetime[5,2]
+        day = @datetime[8,2]
+        time = @datetime[11,8]
 
         return false if year < "2000"
         return false if month > "12"
         return false if day > "31"
-        return false if hour > "24"
-        return false if minute > "60"
-        return false if second > "60"
+        return false if time > "24:00:00"
         
         return true
     end

@@ -69,5 +69,17 @@ describe User do
                 expect(user.save).to eq(false)
             end
         end
+
+        context 'when initialized with too long parameters value' do
+            it 'should return false' do
+                user = User.new(
+                    username = 'its_more_than_30_characters_____',
+                    email = 'this_email_is_more_than_40_characters_@gmail.com',
+                    bio_description = 'bio desc must less than 150' 
+                )
+
+                expect(user.save).to eq(false)
+            end
+        end
     end
 end

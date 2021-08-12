@@ -7,7 +7,7 @@ describe Post do
                 post = Post.new(
                     user_id = 1,
                     text = "A new post",
-                    time = "10-08-2021"
+                    datetime = "2021-08-21 22:30:05"
                 )
 
                 expect(post.valid?).to eq(true)
@@ -19,7 +19,7 @@ describe Post do
                 post = Post.new(
                     user_id = "a",
                     text = "A new post",
-                    time = "10-08-2021"
+                    datetime = "2021-08-21 22:30:05"
                 )
 
                 expect(post.valid?).to eq(false)
@@ -31,7 +31,7 @@ describe Post do
                 post = Post.new(
                     user_id = 1,
                     text = "a"*1001,
-                    time = "10-08-2021"
+                    datetime = "2021-08-21 22:30:05"
                 )
 
                 expect(post.valid?).to eq(false)

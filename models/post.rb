@@ -1,15 +1,15 @@
 class Post
-    def initialize(id=nil, user_id, text, time)
+    def initialize(id=nil, user_id, text, datetime)
         @id = id
         @user_id = user_id
         @text = text
-        @time = time
+        @datetime = datetime
     end
     
     def valid?
         return false if !valid_user_id?
         return false if !valid_text?
-        return false if @time.empty?
+        return false if @datetime.empty?
         return true
     end
 

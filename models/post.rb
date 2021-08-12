@@ -7,6 +7,7 @@ class Post
         @user_id = user_id
         @text = text
         @datetime = datetime
+        @hashtags = []
     end
     
     def valid?
@@ -46,6 +47,12 @@ class Post
     end
 
     def generate_hashtags
-        return []
+        hash_index = @text.index("#")
+
+        if !hash_index.nil?
+            @hashtags << @text[hash_index, @text.length] 
+        end
+
+        @hashtags
     end
 end

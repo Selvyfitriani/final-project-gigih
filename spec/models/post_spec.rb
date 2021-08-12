@@ -89,5 +89,21 @@ describe Post do
                 expect(hashtags).to eq(expected_hashtags)
             end
         end 
+
+        context 'when text has 1 hashtag' do
+            it 'should return array with the hashtag' do
+                post = Post.new(
+                    user_id = 1,
+                    text = "A new post #ini_hashtag",
+                    datetime = "2021-12-31 24:00:05"
+                )
+
+                hashtags = post.generate_hashtags()
+                expected_hashtags = ["#ini_hashtag"]
+                expect(hashtags).to eq(expected_hashtags)
+            end
+        end
     end
+
+    
 end

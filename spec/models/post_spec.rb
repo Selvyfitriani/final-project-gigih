@@ -37,5 +37,17 @@ describe Post do
                 expect(post.valid?).to eq(false)
             end
         end
+
+        context 'when initialized with invalid format datetime' do
+            it 'should return false' do
+                post = Post.new(
+                    user_id = 1,
+                    text = "A new post",
+                    datetime = "2021-08-21 22:30:05a"
+                )
+
+                expect(post.valid?).to eq(false)
+            end
+        end
     end
 end

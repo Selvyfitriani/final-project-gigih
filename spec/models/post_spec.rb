@@ -117,6 +117,20 @@ describe Post do
                 expect(hashtags).to eq(expected_hashtags)
             end
         end
+
+        context 'when text contain multiple instances of a hashtag' do
+            it 'should return only one hashtags' do
+                post = Post.new(
+                    user_id = 1,
+                    text = "#hashtag #hashtaG #hasHtag",
+                    datetime = "2021-12-31 24:00:05"
+                )
+
+                hashtags = post.generate_hashtags()
+                expected_hashtags = ["#hashtag"]
+                expect(hashtags).to eq(expected_hashtags)
+            end
+        end
     end
 
     

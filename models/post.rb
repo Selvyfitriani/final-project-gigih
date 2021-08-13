@@ -51,10 +51,13 @@ class Post
 
         pieces.each do |piece|
             if piece[0, 1] == "#" 
-                @hashtags << piece 
+                hashtag = piece.downcase
+                if !@hashtags.include? hashtag
+                    @hashtags << hashtag 
+                end
             end 
         end
-        
+
         @hashtags
     end
 end

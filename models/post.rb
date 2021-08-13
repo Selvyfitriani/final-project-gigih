@@ -47,12 +47,14 @@ class Post
     end
 
     def generate_hashtags
-        hash_index = @text.index("#")
+        pieces = @text.split(" ")
 
-        if !hash_index.nil?
-            @hashtags << @text[hash_index, @text.length] 
+        pieces.each do |piece|
+            if piece[0, 1] == "#" 
+                @hashtags << piece 
+            end 
         end
-
+        
         @hashtags
     end
 end

@@ -63,4 +63,8 @@ class Post
 
         @hashtags
     end
+
+    def save
+        return false unless valid?
+    end
 end

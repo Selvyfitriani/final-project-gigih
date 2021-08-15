@@ -155,4 +155,18 @@ describe Post do
             end
         end
     end
+
+    describe '#save' do
+        context 'when given invalid input' do
+            it 'should not save to database and return false' do
+                post = Post.new(
+                    user_id = 1, #non-existent user id
+                    text = "A new post"*1000,
+                    datetime = "2021-08-21 22:30:05"
+                )
+
+                expect(post.save).to eq(false)
+            end
+        end
+    end
 end

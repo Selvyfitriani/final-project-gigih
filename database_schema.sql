@@ -16,10 +16,10 @@ CREATE TABLE users (
 CREATE TABLE posts(
     id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
-    words VARCHAR(1000) NOT NULL,
+    text VARCHAR(1000) NOT NULL,
     attachment TEXT,
     hashtags VARCHAR(1000),
-    timepost DATETIME NOT NULL,
+    datetime DATETIME NOT NULL,
     
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -29,7 +29,7 @@ CREATE TABLE posts(
 CREATE TABLE comments (
     id INT NOT NULL AUTO_INCREMENT,
     post_id INT NOT NULL,
-    words VARCHAR(1000) NOT NULL,
+    text VARCHAR(1000) NOT NULL,
     hashtags VARCHAR(1000),
     attachment TEXT,    
 

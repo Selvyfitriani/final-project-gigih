@@ -4,13 +4,36 @@ describe Post do
     describe '#valid?' do
         context 'when initialized with valid mandatory attributes value' do
             it 'should return true' do
+                user = User.new(
+                    id = 1,
+                    username = 'selvyfitriani31',
+                    email = "selvyfitriani31@gmail.com",  
+                    bio_description = 'a learner',
+                )
+
+                user.save
+                
+                post = Post.new(
+                    user_id = user.id,
+                    text = "A new post",
+                    datetime = "2021-08-21 22:30:05"
+                )
+
+                expect(post.valid?).to eq(true)
+
+                User.delete(user.id)
+            end
+        end
+
+        context 'when post contains non-existent user id' do
+            it 'should return false' do
                 post = Post.new(
                     user_id = 1,
                     text = "A new post",
                     datetime = "2021-08-21 22:30:05"
                 )
 
-                expect(post.valid?).to eq(true)
+                expect(post.valid?).to eq(false)
             end
         end
 
@@ -132,6 +155,4 @@ describe Post do
             end
         end
     end
-
-    
 end

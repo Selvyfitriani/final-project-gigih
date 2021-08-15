@@ -1,3 +1,5 @@
+require "./models/user"
+
 class Post
 
     VALID_DATETIME_REGEX = /^\d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2}$/
@@ -20,6 +22,7 @@ class Post
     def valid_user_id?
         return false if !@user_id.is_a? Integer
         return false if @user_id < 0
+        return false if User.find_by_id(@user_id).nil?
         return true 
     end
 

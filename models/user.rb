@@ -22,7 +22,7 @@ class User
             d. So, (\.[a-z]+)*\.[a-z]+ means last part must contain at least second domain
     RegexExplanation
 
-    attr_accessor :username, :email, :bio_description
+    attr_accessor :id, :username, :email, :bio_description
 
     VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
         
@@ -56,9 +56,15 @@ class User
         return false if !valid?
 
         client = create_db_client
-        client.query("INSERT INTO users(username, email, bio_description) " +
-            "VALUES('#{@username}', '#{@email}', '#{bio_description}')")
-        
+
+        if @id
+            client.query("INSERT INTO users(id, username, email, bio_description) " +
+                "VALUES(#{@id}, '#{@username}', '#{@email}', '#{bio_description}')")
+        else 
+            client.query("INSERT INTO users(username, email, bio_description) " +
+                "VALUES('#{@username}', '#{@email}', '#{bio_description}')")
+        end
+
         return true
     end
 
@@ -85,5 +91,10 @@ class User
         end
 
         user
+    end
+
+    def self.delete(id)
+        client = create_db_client
+        client.query("DELETE FROM users WHERE id=#{id}")
     end
 end

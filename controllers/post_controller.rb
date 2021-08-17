@@ -9,9 +9,10 @@ class PostController
             datetime = params["datetime"]
         )
         
-        response = {}
+        user = User.find_by_id(user_id)
 
-        if post.save
+        response = {}
+        if user && post.save
             response["status_code"] = "201"
             response["message"] = "Successfully insert post to database"
         else

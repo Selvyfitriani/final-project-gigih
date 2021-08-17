@@ -41,5 +41,25 @@ describe PostController do
 
             end
         end
+
+        context 'when given non-existent user id' do
+            it 'should not save to database and return error message in response' do
+                params = {
+                    "user_id" => 1,
+                    "text" => "A new post",
+                    "datetime" => "2021-08-21 22:30:05"   
+                }
+
+                controller = PostController.new
+                response = controller.create(params)
+
+                post_id = Post.get_last_insert_id()
+                expected_post = Post.find_by_id(post_id)
+                expect(expected_post).to be nil
+
+                expected_response = JSON.generate({"status_code" => "400", "message" => "Sorry! Creating new post is failed because invalid parameters"})
+                expect(response).to eq(expected_response)
+            end
+        end
     end
 end

@@ -37,6 +37,18 @@ describe Post do
             end
         end
 
+        context 'when initialized with string-formatted valid user id' do
+            it 'should return true' do
+                post = Post.new(
+                    user_id = "1",
+                    text = "A new post",
+                    datetime = "2021-08-21 22:30:05"
+                )
+
+                expect(post.valid?).to eq(true)
+            end
+        end
+
         context 'when initialized with too long text' do
             it 'should return false' do
                 post = Post.new(

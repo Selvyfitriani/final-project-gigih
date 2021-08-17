@@ -3,6 +3,8 @@ require "./models/user"
 
 class Post
 
+    attr_accessor :user_id
+
     VALID_DATETIME_REGEX = /^\d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2}$/
 
     def initialize(id=nil, user_id, text, datetime)
@@ -21,8 +23,9 @@ class Post
     end
 
     def valid_user_id?
-        return false if !@user_id.is_a? Integer
-        return false if @user_id < 0
+        int_user_id = @user_id.to_i
+
+        return false if int_user_id <= 0
         return true 
     end
 
@@ -66,7 +69,7 @@ class Post
 
     def save
         return false unless valid?
-
+       
         client = create_db_client
         if @id
             client.query("INSERT INTO posts(id, user_id, text, datetime) " +

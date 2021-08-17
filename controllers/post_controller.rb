@@ -9,8 +9,8 @@ class PostController
             datetime = params["datetime"]
         )
         
-        user = User.find_by_id(user_id)
-
+        user = User.find_by_id(post.user_id)
+        
         response = {}
         if user && post.save
             response["status_code"] = "201"

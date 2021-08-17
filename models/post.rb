@@ -1,3 +1,4 @@
+require "./database/db_connector"
 require "./models/user"
 
 class Post
@@ -22,7 +23,6 @@ class Post
     def valid_user_id?
         return false if !@user_id.is_a? Integer
         return false if @user_id < 0
-        return false if User.find_by_id(@user_id).nil?
         return true 
     end
 
@@ -66,5 +66,41 @@ class Post
 
     def save
         return false unless valid?
+
+        client = create_db_client
+        if @id
+            client.query("INSERT INTO posts(id, user_id, text, datetime) " +
+                "VALUES(#{@id}, #{@user_id}, '#{@text}', '#{@datetime}')")
+        else 
+            client.query("INSERT INTO posts(user_id, text, datetime) " +
+                "VALUES(#{@user_id}, '#{@text}', '#{@datetime}')")
+        end
+
+        return true
+    end
+
+    def self.get_last_insert_id
+        client = create_db_client()
+        raw_data = client.query("SELECT MAX(id) as id FROM posts")
+
+        raw_data.each do |datum|
+            return datum["id"].to_i
+        end    
+    end
+
+    def self.find_by_id(id)
+        client = create_db_client
+        raw_data = client.query("SELECT * FROM posts WHERE id = #{id}")
+        
+        post = nil
+        raw_data.each do |datum|
+            post = Post.new(
+                user_id = datum["user_id"], 
+                text = datum["text"], 
+                datetime = datum["datetime"]
+            )
+        end
+
+        post
     end
 end

@@ -25,18 +25,6 @@ describe Post do
             end
         end
 
-        context 'when post contains non-existent user id' do
-            it 'should return false' do
-                post = Post.new(
-                    user_id = 1,
-                    text = "A new post",
-                    datetime = "2021-08-21 22:30:05"
-                )
-
-                expect(post.valid?).to eq(false)
-            end
-        end
-
         context 'when initialized with invalid user id' do
             it 'should return false' do
                 post = Post.new(

@@ -108,7 +108,7 @@ describe Post do
                 )
             
                 hashtags = post.generate_hashtags()
-                expected_hashtags = []
+                expected_hashtags = ""
                 expect(hashtags).to eq(expected_hashtags)
             end
         end 
@@ -122,7 +122,7 @@ describe Post do
                 )
 
                 hashtags = post.generate_hashtags()
-                expected_hashtags = ["#ini_hashtag"]
+                expected_hashtags = "#ini_hashtag"
                 expect(hashtags).to eq(expected_hashtags)
             end
         end
@@ -136,7 +136,7 @@ describe Post do
                 )
 
                 hashtags = post.generate_hashtags()
-                expected_hashtags = ["#middle_hashtag"]
+                expected_hashtags = "#middle_hashtag"
                 expect(hashtags).to eq(expected_hashtags)
             end
         end
@@ -150,7 +150,7 @@ describe Post do
                 )
 
                 hashtags = post.generate_hashtags()
-                expected_hashtags = ["#hashtag"]
+                expected_hashtags = "#hashtag"
                 expect(hashtags).to eq(expected_hashtags)
             end
         end
@@ -193,14 +193,53 @@ describe Post do
                 user_controller = UserController.new
                 user_controller.create(user_params)
 
+                hashtags = post.generate_hashtags
+
                 allow(dummy_database).to receive(:query).with("
                     SELECT * FROM users WHERE id = #{user_params['id']}")
-                allow(dummy_database).to receive(:query).with("INSERT INTO posts(user_id, text, datetime) " +
-                    "VALUES(#{post.user_id}, '#{post.text}', '#{post.datetime}')")
+                allow(dummy_database).to receive(:query).with("INSERT INTO posts(user_id, text, datetime, hashtags) " +
+                    "VALUES(#{post.user_id}, '#{post.text}', '#{post.datetime}', '#{hashtags}')")
 
                 response = post.save
                 
                 expect(response).to eq(true)
+            end
+        end
+
+        context 'when given text with hashtags' do
+            it 'should generate all hashtags and save to database' do
+                user_params = {
+                    'id' => 1,
+                    'username' => 'selvyfitriani31',
+                    'email' => 'selvyfitriani31@gmail.com',
+                    'bio_description' => 'a learner'
+                }
+
+                post = Post.new(
+                    user_id = 1, 
+                    text = "A new post #gigih #Gigih #semangat",
+                    datetime = "2021-08-21 22:30:05"
+                )
+                
+                dummy_database = double
+                allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
+                allow(dummy_database).to receive(:query).with("INSERT INTO users(id, username, email, bio_description) " +
+                    "VALUES(#{user_params['id']}, '#{user_params['username']}', " +
+                    "'#{user_params['email']}', '#{user_params['bio_description']}')")
+
+                user_controller = UserController.new
+                user_controller.create(user_params)
+
+                allow(dummy_database).to receive(:query).with("SELECT * FROM posts WHERE id = #{user_params['id']}")
+                
+                hashtags = post.generate_hashtags()
+                allow(dummy_database).to receive(:query).with("INSERT INTO posts(user_id, text, datetime, hashtags) " +
+                    "VALUES(#{post.user_id}, '#{post.text}', '#{post.datetime}', '#{hashtags}')")
+                
+                post.save
+                
+                expected_hashtags = "#gigih #semangat"
+                expect(hashtags).to eq(expected_hashtags)
             end
         end
     end

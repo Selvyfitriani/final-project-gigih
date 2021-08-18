@@ -12,7 +12,7 @@ class Post
         @user_id = user_id
         @text = text
         @datetime = datetime
-        @hashtags = []
+        @hashtags = ""
     end
     
     def valid?
@@ -53,15 +53,21 @@ class Post
     end
 
     def generate_hashtags
-        pieces = @text.split(" ")
+        @hashtags = ""
 
-        pieces.each do |piece|
+        pieces = @text.split(" ")
+        pieces.each do |piece| 
             if piece[0, 1] == "#" 
                 hashtag = piece.downcase
                 if !@hashtags.include? hashtag
-                    @hashtags << hashtag 
+                    @hashtags += hashtag
+                    @hashtags += " "
                 end
             end 
+        end
+
+        if !@hashtags.empty? 
+            @hashtags = @hashtags[0, @hashtags.size-1]
         end
 
         @hashtags
@@ -70,13 +76,15 @@ class Post
     def save
         return false unless valid?
        
+        generate_hashtags
+
         client = create_db_client
         if @id
-            client.query("INSERT INTO posts(id, user_id, text, datetime) " +
-                "VALUES(#{@id}, #{@user_id}, '#{@text}', '#{@datetime}')")
+            client.query("INSERT INTO posts(id, user_id, text, datetime, hashtags) " +
+                "VALUES(#{@id}, #{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
         else 
-            client.query("INSERT INTO posts(user_id, text, datetime) " +
-                "VALUES(#{@user_id}, '#{@text}', '#{@datetime}')")
+            client.query("INSERT INTO posts(user_id, text, datetime, hashtags) " +
+                "VALUES(#{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
         end
 
         return true

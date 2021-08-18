@@ -3,7 +3,7 @@ require "./models/user"
 
 class Post
 
-    attr_accessor :user_id
+    attr_accessor :user_id, :text, :datetime
 
     VALID_DATETIME_REGEX = /^\d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2}$/
 

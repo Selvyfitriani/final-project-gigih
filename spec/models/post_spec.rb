@@ -25,7 +25,7 @@ describe Post do
             end
         end
 
-        context 'when initialized with invalid user id' do
+        context 'when initialized with user id in alphabetical form' do
             it 'should return false' do
                 post = Post.new(
                     user_id = "a",

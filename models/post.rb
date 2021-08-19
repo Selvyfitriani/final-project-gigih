@@ -81,7 +81,6 @@ class Post
         client = create_db_client
         client.query("INSERT INTO posts(user_id, text, datetime, hashtags) " +
             "VALUES(#{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
-    
         return true
     end
 
@@ -99,6 +98,7 @@ class Post
         raw_data = client.query("SELECT * FROM posts WHERE id = #{id}")
         
         post = nil
+
         raw_data.each do |datum|
             post = Post.new(
                 user_id = datum["user_id"], 
@@ -111,6 +111,21 @@ class Post
     end
 
     def self.get_all_by_hashtag(hashtag)
-        return []
+        client = create_db_client
+
+        raw_data = client.query("SELECT * FROM posts WHERE hashtags LIKE '%#{hashtag}%'")
+        
+        posts = []
+       
+        raw_data.each do |datum|
+            post = Post.new(
+                user_id = datum["user_id"], 
+                text = datum["text"], 
+                datetime = datum["datetime"]
+            )
+            posts.push(post)
+        end
+       
+        posts
     end
 end

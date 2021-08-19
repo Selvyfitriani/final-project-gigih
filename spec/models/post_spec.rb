@@ -6,7 +6,7 @@ describe Post do
         client.query("DELETE FROM users")
         client.query("DELETE FROM posts")
     end
-    
+
     describe '#valid?' do
         context 'when initialized with valid mandatory attributes value' do
             it 'should return true' do
@@ -244,6 +244,36 @@ describe Post do
                 expected_posts = []
 
                 expect(posts).to eq(expected_posts)
+            end
+        end
+
+        context 'when there is one post that contain the hashtag' do
+            it 'should return array that includes the post' do
+                user = User.new(
+                    id = 1,
+                    username = 'selvyfitriani31',
+                    email = 'selvyfitriani31@gmail.com',
+                    bio_description = 'a learner'
+                ) 
+                user.save
+                
+                post = Post.new(
+                    user_id = user.id, 
+                    text = "I am a superhero #gigih #Semangat",
+                    datetime = "2021-08-21 22:30:05"
+                )
+                
+                post.save
+                
+                search_hashtag = "#gigih"
+                posts = Post.get_all_by_hashtag(search_hashtag)
+
+                dummy_database = double
+                allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
+                allow(dummy_database).to receive(:query).with("SELECT * FROM posts " +
+                     "WHERE hashtags LIKE '%#{search_hashtag}%'")
+                    
+                expect(posts.length).to eq(1)
             end
         end
     end 

@@ -1,3 +1,4 @@
+require "./test_helper"
 require "./controllers/post_controller"
 require "./controllers/user_controller"
 require "./models/post"

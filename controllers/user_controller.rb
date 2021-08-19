@@ -4,6 +4,7 @@ require "json"
 class UserController
     def create(params)
         user = User.new(
+            id = params["id"],
             username = params["username"],
             email = params["email"],
             bio_description = params["bio_description"]

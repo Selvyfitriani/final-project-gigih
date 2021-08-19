@@ -100,7 +100,7 @@ describe Post do
 
     describe '#generate_hashtags' do
         context 'when text has no hashtags' do
-            it 'should return empty list' do
+            it 'should return empty string' do
                 post = Post.new(
                     user_id = 1,
                     text = "A new post",
@@ -114,7 +114,7 @@ describe Post do
         end 
 
         context 'when text has 1 hashtag' do
-            it 'should return array with the hashtag' do
+            it 'should return string with the hashtag' do
                 post = Post.new(
                     user_id = 1,
                     text = "A new post #ini_hashtag",
@@ -128,7 +128,7 @@ describe Post do
         end
 
         context 'when text has 1 hashtag in the middle' do
-            it 'should return array with the hashtag' do
+            it 'should return string with the hashtag' do
                 post = Post.new(
                     user_id = 1,
                     text = "A new post #middle_hashtag in my account",
@@ -142,7 +142,7 @@ describe Post do
         end
 
         context 'when text contain multiple instances of a hashtag' do
-            it 'should return only one hashtags' do
+            it 'should return only one hashtag' do
                 post = Post.new(
                     user_id = 1,
                     text = "#hashtag #hashtaG #hasHtag",

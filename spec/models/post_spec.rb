@@ -90,7 +90,7 @@ describe Post do
                 post = Post.new(
                     user_id = 1,
                     text = "A new post",
-                    datetime = "2021-12-31 24:00:05"
+                    datetime = "2021-12-30 24:00:05"
                 )
 
                 expect(post.valid?).to eq(false)

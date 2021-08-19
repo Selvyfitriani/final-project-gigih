@@ -1,6 +1,12 @@
 require "./models/post"
 
 describe Post do
+    before (:each) do
+        client = create_db_client
+        client.query("DELETE FROM users")
+        client.query("DELETE FROM posts")
+    end
+    
     describe '#valid?' do
         context 'when initialized with valid mandatory attributes value' do
             it 'should return true' do
@@ -178,6 +184,8 @@ describe Post do
                     bio_description = 'a learner'
                 )
 
+                user.save
+
                 post = Post.new(
                     user_id = user.id, 
                     text = "A new post",
@@ -186,14 +194,8 @@ describe Post do
                 
                 dummy_database = double
                 allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
-                allow(dummy_database).to receive(:query).with("INSERT INTO users" +
-                    "(id, username, email, bio_description) " +
-                    "VALUES(#{user.id}, '#{user.username}', " +
-                    "'#{user.email}', '#{user.bio_description}')")
-                user.save
                 
                 hashtags = post.generate_hashtags
-                
                 allow(dummy_database).to receive(:query).with("INSERT INTO posts" +
                     "(user_id, text, datetime, hashtags) " +
                     "VALUES(#{post.user_id}, '#{post.text}', '#{post.datetime}', '#{hashtags}')")
@@ -211,7 +213,8 @@ describe Post do
                     email = 'selvyfitriani31@gmail.com',
                     bio_description = 'a learner'
                 )
-
+                user.save
+ 
                 post = Post.new(
                     user_id = 1, 
                     text = "A new post #gigih #Gigih #semangat",
@@ -220,12 +223,7 @@ describe Post do
                 
                 dummy_database = double
                 allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
-                allow(dummy_database).to receive(:query).with("INSERT INTO users" +
-                    "(id, username, email, bio_description) " +
-                    "VALUES(#{user.id}, '#{user.username}', " +
-                    "'#{user.email}', '#{user.bio_description}')")
-                user.save
- 
+                
                 hashtags = post.generate_hashtags()
                 allow(dummy_database).to receive(:query).with("INSERT INTO posts(user_id, text, datetime, hashtags) " +
                     "VALUES(#{post.user_id}, '#{post.text}', '#{post.datetime}', '#{hashtags}')")

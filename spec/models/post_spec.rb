@@ -236,4 +236,17 @@ describe Post do
             end
         end
     end
+
+    describe '.get_all_by_hashtag' do 
+        context 'when there are no posts that contain the hashtag' do
+            it 'should return empty array' do
+                hashtag = '#gigih'
+                posts = Post.get_all_by_hashtag(hashtag)
+                
+                expected_posts = []
+
+                expect(posts).to eq(expected_posts)
+            end
+        end
+    end 
 end

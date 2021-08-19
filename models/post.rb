@@ -109,4 +109,8 @@ class Post
 
         post
     end
+
+    def self.get_all_by_hashtag(hashtag)
+        return []
+    end
 end

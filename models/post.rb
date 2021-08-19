@@ -79,14 +79,9 @@ class Post
         generate_hashtags
 
         client = create_db_client
-        if @id
-            client.query("INSERT INTO posts(id, user_id, text, datetime, hashtags) " +
-                "VALUES(#{@id}, #{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
-        else 
-            client.query("INSERT INTO posts(user_id, text, datetime, hashtags) " +
-                "VALUES(#{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
-        end
-
+        client.query("INSERT INTO posts(user_id, text, datetime, hashtags) " +
+            "VALUES(#{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
+    
         return true
     end
 

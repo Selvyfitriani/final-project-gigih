@@ -23,7 +23,7 @@ describe UserController do
                 response = controller.create(params)
 
                 user_id = User.get_last_insert_id()
-                expected_user = User.find_by_id(user_id)
+                expected_user = User.get_by_id(user_id)
                 expect(expected_user).not_to be nil
 
                 expected_response = JSON.generate({"status_code" => "201", "message" => "Successfully insert user to database"})
@@ -43,7 +43,7 @@ describe UserController do
                 response = controller.create(params)
 
                 user_id = User.get_last_insert_id()
-                expected_user = User.find_by_id(user_id)
+                expected_user = User.get_by_id(user_id)
                 expect(expected_user).to be nil
 
                 expected_response = JSON.generate({"status_code" => "400", "message" => "Sorry! Creating new user is failed because invalid parameters"})

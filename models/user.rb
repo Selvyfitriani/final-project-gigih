@@ -77,7 +77,7 @@ class User
         end    
     end
 
-    def self.find_by_id(id)
+    def self.get_by_id(id)
         client = create_db_client
         raw_data = client.query("SELECT * FROM users WHERE id = #{id}")
         

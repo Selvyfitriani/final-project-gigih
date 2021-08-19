@@ -30,7 +30,7 @@ describe PostController do
                 response = post_controller.create(post_params)
 
                 post_id = Post.get_last_insert_id()
-                expected_post = Post.find_by_id(post_id)
+                expected_post = Post.get_by_id(post_id)
                 expect(expected_post).not_to be nil
 
                 expected_response = JSON.generate({"status_code" => "201", "message" => "Successfully insert post to database"})
@@ -50,7 +50,7 @@ describe PostController do
                 response = controller.create(params)
 
                 post_id = Post.get_last_insert_id()
-                expected_post = Post.find_by_id(post_id)
+                expected_post = Post.get_by_id(post_id)
                 expect(expected_post).to be nil
 
                 expected_response = JSON.generate({"status_code" => "400", "message" => "Sorry! Creating new post is failed because invalid parameters"})

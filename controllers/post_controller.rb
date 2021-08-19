@@ -9,7 +9,7 @@ class PostController
             datetime = params["datetime"]
         )
         
-        user = User.find_by_id(post.user_id)
+        user = User.get_by_id(post.user_id)
         
         response = {}
         if user && post.save

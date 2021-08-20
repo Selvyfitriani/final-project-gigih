@@ -61,6 +61,21 @@ describe PostController do
     end
 
     describe '#get_all_by_hashtag' do
+        context 'when there is no post that contain the hashtag' do
+            it 'should return an empty list' do
+                params = { "hashtag" => "gigih" }
+                
+                controller = PostController.new
+                response = controller.get_all_by_hashtag(params)
+
+                expected_response = JSON.generate({
+                    "status_code" => "200",  
+                    "posts" => []
+                })
+                expect(response).to eq(expected_response)
+            end
+        end
+
         context 'when there is one post that contain hashtag' do
             it 'should return the post in a list' do
                 user = User.new(

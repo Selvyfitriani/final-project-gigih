@@ -91,23 +91,17 @@ describe PostController do
                     text = "I am a superhero #gigih #Semangat",
                     datetime = "2021-08-21 22:30:05"
                 )
-                
                 post.save
 
                 params = { "hashtag" => "gigih" }
+                posts = Post.get_all_by_hashtag(params["hashtag"])
                 
                 controller = PostController.new
+                json_posts = controller.transform_to_json(posts)
                 response = controller.get_all_by_hashtag(params)
-
                 expected_response = JSON.generate({
                     "status_code" => "200",  
-                    "posts" => [
-                            {
-                                "user_id" => post.user_id,
-                                "text" => post.text,
-                                "datetime" => post.datetime
-                            }
-                    ]
+                    "posts" => json_posts
                 })
                 expect(response).to eq(expected_response)
             end

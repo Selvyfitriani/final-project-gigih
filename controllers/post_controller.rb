@@ -43,4 +43,8 @@ class PostController
         response = JSON.generate(response)
         response
     end
+
+    def transform_to_json(posts)
+        return []
+    end
 end

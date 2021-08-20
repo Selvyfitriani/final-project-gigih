@@ -113,4 +113,20 @@ describe PostController do
             end
         end
     end
+
+    describe '#transform_to_json' do
+        context 'when there is no post' do
+            it 'should return empty array' do
+                search_hashtag = "gigih"
+                posts = Post.get_all_by_hashtag(search_hashtag)
+                
+                controller = PostController.new
+                json_posts = controller.transform_to_json(posts)
+
+                expected_json_posts = []
+
+                expect(json_posts).to eq(expected_json_posts)
+            end
+        end
+    end
 end

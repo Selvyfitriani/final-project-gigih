@@ -23,4 +23,16 @@ class PostController
         response = JSON.generate(response)
         response
     end
+
+    def get_all_by_hashtag(params)
+        hashtag = params["hashtag"]
+        posts = Post.get_all_by_hashtag(hashtag)
+
+        response = {}
+        response["status_code"] = "200"
+        response["message"] = {"text": "#{posts[0].text}"}
+
+        response = JSON.generate(response)
+        response
+    end
 end

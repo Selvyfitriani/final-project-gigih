@@ -59,4 +59,34 @@ describe PostController do
             end
         end
     end
+
+    describe '#get_all_by_hashtag' do
+        context 'when given existent hashtag' do
+            it 'should return list of posts that contain the hashtag' do
+                user = User.new(
+                    id = 1,
+                    username = 'selvyfitriani31',
+                    email = 'selvyfitriani31@gmail.com',
+                    bio_description = 'a learner'
+                ) 
+                user.save
+                
+                post = Post.new(
+                    user_id = user.id, 
+                    text = "I am a superhero #gigih #Semangat",
+                    datetime = "2021-08-21 22:30:05"
+                )
+                
+                post.save
+
+                params = { "hashtag" => "#gigih" }
+                
+                controller = PostController.new
+                response = controller.get_all_by_hashtag(params)
+
+                expected_response = JSON.generate({"status_code" => "200",  "message" => {"text": "#{post.text}"}})
+                expect(response).to eq(expected_response)
+            end
+        end
+    end
 end

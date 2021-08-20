@@ -45,6 +45,16 @@ class PostController
     end
 
     def transform_to_json(posts)
-        return []
+        json_posts = []
+         
+        if !posts[0].nil?
+            json_post = {
+                "user_id" => posts[0].user_id,
+                "text" => posts[0].text,
+                "datetime" => posts[0].datetime.strftime("%Y-%m-%d %H:%M:%S")
+            }
+            json_posts.push(json_post)
+        end
+        json_posts 
     end
 end

@@ -66,10 +66,6 @@ class Post
             end 
         end
 
-        if !@hashtags.empty? 
-            @hashtags = @hashtags[0, @hashtags.size-1]
-        end
-
         @hashtags
     end
 
@@ -113,7 +109,7 @@ class Post
     def self.get_all_by_hashtag(hashtag)
         client = create_db_client
 
-        raw_data = client.query("SELECT * FROM posts WHERE hashtags LIKE '%#{hashtag}%'")
+        raw_data = client.query("SELECT * FROM posts WHERE hashtags LIKE '%##{hashtag} %'")
         
         posts = []
        

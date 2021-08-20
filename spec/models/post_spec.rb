@@ -128,7 +128,7 @@ describe Post do
                 )
 
                 hashtags = post.generate_hashtags()
-                expected_hashtags = "#ini_hashtag"
+                expected_hashtags = "#ini_hashtag "
                 expect(hashtags).to eq(expected_hashtags)
             end
         end
@@ -142,7 +142,7 @@ describe Post do
                 )
 
                 hashtags = post.generate_hashtags()
-                expected_hashtags = "#middle_hashtag"
+                expected_hashtags = "#middle_hashtag "
                 expect(hashtags).to eq(expected_hashtags)
             end
         end
@@ -156,7 +156,7 @@ describe Post do
                 )
 
                 hashtags = post.generate_hashtags()
-                expected_hashtags = "#hashtag"
+                expected_hashtags = "#hashtag "
                 expect(hashtags).to eq(expected_hashtags)
             end
         end
@@ -229,7 +229,7 @@ describe Post do
                     "VALUES(#{post.user_id}, '#{post.text}', '#{post.datetime}', '#{hashtags}')")
                 post.save
                 
-                expected_hashtags = "#gigih #semangat"
+                expected_hashtags = "#gigih #semangat "
                 expect(hashtags).to eq(expected_hashtags)
             end
         end
@@ -238,8 +238,8 @@ describe Post do
     describe '.get_all_by_hashtag' do 
         context 'when there are no posts that contain the hashtag' do
             it 'should return empty array' do
-                hashtag = '#gigih'
-                posts = Post.get_all_by_hashtag(hashtag)
+                search_hashtag = 'gigih'
+                posts = Post.get_all_by_hashtag(search_hashtag)
                 
                 expected_posts = []
 
@@ -265,15 +265,44 @@ describe Post do
                 
                 post.save
                 
-                search_hashtag = "#gigih"
+                search_hashtag = "gigih"
                 posts = Post.get_all_by_hashtag(search_hashtag)
 
                 dummy_database = double
                 allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
                 allow(dummy_database).to receive(:query).with("SELECT * FROM posts " +
-                     "WHERE hashtags LIKE '%#{search_hashtag}%'")
-                    
+                     "WHERE hashtags LIKE '%##{search_hashtag} %'")
                 expect(posts.length).to eq(1)
+            end
+        end
+
+        context 'when searched hashtag not full' do
+            it 'should not return the posts' do
+                user = User.new(
+                    id = 1,
+                    username = 'selvyfitriani31',
+                    email = 'selvyfitriani31@gmail.com',
+                    bio_description = 'a learner'
+                ) 
+                user.save
+                
+                post = Post.new(
+                    user_id = user.id, 
+                    text = "I am a superhero #gigih #Semangat",
+                    datetime = "2021-08-21 22:30:05"
+                )
+                
+                post.save
+                
+                search_hashtag = "gig"
+                posts = Post.get_all_by_hashtag(search_hashtag)
+
+                dummy_database = double
+                allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
+                allow(dummy_database).to receive(:query).with("SELECT * FROM posts " +
+                     "WHERE hashtags LIKE '%##{search_hashtag} %'")
+                    
+                expect(posts.length).to eq(0)
             end
         end
     end 

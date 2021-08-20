@@ -79,7 +79,7 @@ describe PostController do
                 
                 post.save
 
-                params = { "hashtag" => "#gigih" }
+                params = { "hashtag" => "gigih" }
                 
                 controller = PostController.new
                 response = controller.get_all_by_hashtag(params)

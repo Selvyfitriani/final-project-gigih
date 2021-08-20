@@ -30,7 +30,13 @@ class PostController
 
         response = {}
         response["status_code"] = "200"
-        response["message"] = {"text": "#{posts[0].text}"}
+        response["message"] = [
+            {
+                "user_id" => posts[0].user_id,
+                "text" => posts[0].text,
+                "datetime" => posts[0].datetime.strftime("%Y-%m-%d %H:%M:%S")
+            }
+        ]
 
         response = JSON.generate(response)
         response

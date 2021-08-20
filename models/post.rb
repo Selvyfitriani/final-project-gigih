@@ -124,4 +124,14 @@ class Post
        
         posts
     end
+
+    def to_json
+        json_post = {
+            "user_id" => @user_id,
+            "text" => @text,
+            "datetime" => @datetime.strftime("%Y-%m-%d %H:%M:%S")
+        }
+
+        json_post
+    end
 end

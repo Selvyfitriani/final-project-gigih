@@ -161,5 +161,54 @@ describe PostController do
                 expect(json_posts).to eq(expected_json_posts)
             end
         end
+
+        context 'when there are more than one post' do
+            it 'should return list of detail posts in json format' do
+                user = User.new(
+                    id = 1,
+                    username = 'selvyfitriani31',
+                    email = 'selvyfitriani31@gmail.com',
+                    bio_description = 'a learner'
+                ) 
+                user.save
+                
+                post = Post.new(
+                    user_id = user.id, 
+                    text = "I am a superhero #gigih #Semangat",
+                    datetime = "2021-08-21 22:30:05"
+                )
+                
+                post_num = 3
+                1.upto(post_num) do |num|
+                    post.save
+                end
+                
+                search_hashtag = "gigih"
+                
+                posts = Post.get_all_by_hashtag(search_hashtag)
+                controller = PostController.new
+                json_posts = controller.transform_to_json(posts)
+
+                expected_json_posts = [
+                    {
+                    "user_id" => post.user_id,
+                    "text" => post.text,
+                    "datetime" => post.datetime
+                    },
+                    {
+                        "user_id" => post.user_id,
+                        "text" => post.text,
+                        "datetime" => post.datetime
+                    },
+                    {
+                        "user_id" => post.user_id,
+                        "text" => post.text,
+                        "datetime" => post.datetime
+                    }
+                ]
+                
+                expect(json_posts).to eq(expected_json_posts)
+            end
+        end
     end
 end

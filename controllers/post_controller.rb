@@ -30,7 +30,7 @@ class PostController
 
         response = {}
         response["status_code"] = "200"
-        response["message"] = [
+        response["posts"] = [
             {
                 "user_id" => posts[0].user_id,
                 "text" => posts[0].text,

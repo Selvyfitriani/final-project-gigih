@@ -86,7 +86,7 @@ describe PostController do
 
                 expected_response = JSON.generate({
                     "status_code" => "200",  
-                    "message" => [
+                    "posts" => [
                             {
                                 "user_id" => post.user_id,
                                 "text" => post.text,

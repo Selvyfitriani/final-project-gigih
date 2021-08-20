@@ -31,15 +31,12 @@ class PostController
         response = {}
         response["status_code"] = "200"
         response["posts"] = []
-        if !posts[0].nil?
-            response["posts"] = [
-                {
-                    "user_id" => posts[0].user_id,
-                    "text" => posts[0].text,
-                    "datetime" => posts[0].datetime.strftime("%Y-%m-%d %H:%M:%S")
-                }
-            ]
+        
+        posts.each do |post|
+            json_post = post.to_json
+            response["posts"] << json_post
         end
+
         response = JSON.generate(response)
         response
     end
@@ -51,7 +48,7 @@ class PostController
             json_post = post.to_json
             json_posts << json_post
         end
-        
+
         json_posts 
     end
 end

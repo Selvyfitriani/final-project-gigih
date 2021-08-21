@@ -7,6 +7,14 @@ class Comment
     end
 
     def valid?
+        return false if !valid_user_id?
+        return true
+    end
+
+    def valid_user_id?
+        int_user_id = @user_id.to_i
+
+        return false if int_user_id <= 0
         return true
     end
 end

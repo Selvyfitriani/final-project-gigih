@@ -1,8 +1,8 @@
 ## Final Project - Generasi Gigih Intermediate Class
 
-Name: Selvy Fitriani
-Participant ID: GBE01137
-Class: BE Bisa
+Name: Selvy Fitriani <br />
+Participant ID: GBE01137 <br />
+Class: BE Bisa <br />
 
 -------
 

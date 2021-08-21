@@ -1,4 +1,5 @@
 require "./test_helper"
+require "./database/db_connector"
 require "./controllers/post_controller"
 require "./controllers/user_controller"
 require "./models/post"

@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'sinatra', '~> 2.1.0'
+gem 'json', '~> 2.5.1'
+gem 'json_pure', '~> 2.5.1'
+gem 'multi_json', '~> 1.15.0'
+gem 'simplecov_json_formatter', '~> 0.1.3'
+gem 'mysql2', '~> 0.5.3'
+gem 'simplecov', '~> 0.21.2'
+gem 'simplecov-html', '~> 0.12.3'

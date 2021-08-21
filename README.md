@@ -36,11 +36,7 @@ Then, insert your password
 This script will create the database and insert some dummy data.
 
 #### Install Dependencies
-``sudo apt-get update -y``
-``sudo apt-get install -y ruby-sinatra``
-``sudo gem install mysql2``
-``sudo gem install json``
-``sudo gem install simplecov``
+This command will install all dependencies in Gemfile
 ``bundle install``
 
 

@@ -136,17 +136,63 @@ class Post
     end
 
     def self.trending 
+        hashtags_in_24_hours = get_all_hashtag_in_24_hours
+        
+        counted_hashtag = get_counted_hashtag(hashtags_in_24_hours)
+        counted_hashtag = counted_hashtag.sort_by{|hashtag, count| count}
+        
+        top_5_hashtag = counted_hashtag.last(5).reverse
+        
         trending_hashtags = []
-        client = create_db_client
-        raw_data = client.query("SELECT hashtags, count(*) as count " +
-            "from posts GROUP BY hashtags");
-
-        raw_data.each do |datum|
-            hashtag_len = datum["hashtags"].length
-            hashtag = datum["hashtags"][0, hashtag_len-1]
+        top_5_hashtag.each do |hashtag, count|
+            
             trending_hashtags << hashtag
         end
-
+        
         trending_hashtags
+    end
+
+    def self.get_all_hashtag_in_24_hours
+        client = create_db_client
+        raw_data = client.query("SELECT hashtags FROM posts " +
+            "WHERE TIMESTAMPDIFF (HOUR, now(), datetime) > -24");
+        
+        hashtags = []
+
+        raw_data.each do |datum|
+            hastagh_in_a_post = split_hashtags(datum["hashtags"])
+            hashtags += hastagh_in_a_post
+        end
+
+        hashtags
+    end
+
+    def self.split_hashtags(hashtags)
+        no_punctuation_hastaghs = hashtags.gsub(/[^a-z0-9\#]/, '')
+        splitted_hastaghs = no_punctuation_hastaghs.split("#")
+
+        hashtags = []
+        splitted_hastaghs.each do |hashtag|
+            if hashtag != ""
+                hashtag = "#" + hashtag
+                hashtags << hashtag
+            end
+        end
+
+        hashtags
+    end
+
+    def self.get_counted_hashtag(hashtags)
+        counted_hashtag = {}
+
+        hashtags.each do |hashtag|
+            if counted_hashtag.key?(hashtag)
+                counted_hashtag[hashtag] += 1   
+            else 
+                counted_hashtag[hashtag] = 1
+            end
+        end
+
+        counted_hashtag
     end
 end

@@ -9,6 +9,7 @@ class Comment
     def valid?
         return false if !valid_user_id?
         return false if !valid_post_id?
+        return false if !valid_text?
         return true
     end
 
@@ -23,6 +24,11 @@ class Comment
         int_post_id = @post_id.to_i
 
         return false if int_post_id <= 0
+        return true
+    end
+
+    def valid_text?
+        return false if @text.empty?
         return true
     end
 end

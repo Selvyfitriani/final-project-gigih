@@ -8,13 +8,21 @@ class Comment
 
     def valid?
         return false if !valid_user_id?
+        return false if !valid_post_id?
         return true
     end
 
     def valid_user_id?
         int_user_id = @user_id.to_i
-
+     
         return false if int_user_id <= 0
+        return true
+    end
+
+    def valid_post_id?
+        int_post_id = @post_id.to_i
+
+        return false if int_post_id <= 0
         return true
     end
 end

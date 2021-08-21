@@ -1,3 +1,4 @@
+require "./test_helper"
 require "./models/post"
 
 describe Post do

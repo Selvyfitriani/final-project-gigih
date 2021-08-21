@@ -38,3 +38,28 @@ CREATE TABLE comments (
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE
 );
+
+-- INSERTING SOME DATA TO DATABASE --
+INSERT INTO users(id, username, email, bio_description)
+VALUES
+    (1, "joko", "joko@gmail.com", "pelajar"),
+    (2, "indah", "indah@gmail.com", "selalu tersenyum"),
+    (3, "rangga", "rangga31@gmail.com", "orang sibuk"),
+    (4, "cika", "cika123@yahoo.com", "a traveller"),
+    (5, "selvy", "selvy@gmail.com", "nothing");
+
+INSERT INTO posts(id, user_id, datetime, text, hashtags)
+VALUES
+    (1, 1, now(), "Aku adalah superhero #gigih", "#gigih "),  
+    (2, 2, now(), "Aku adalah superhero #gigih #semangat", "#gigih #semangat "),
+    (3, 5, now(), "Aku adalah superhero #semangat", "#semangat "),
+    (4, 3, now(), "Aku adalah superhero", ""),
+    (5, 4, now(), "Aku adalah superhero #gigih", "#gigih ");
+
+INSERT INTO comments(id, user_id, post_id, text, hashtags)
+VALUES
+    (1, 5, 1, "Beneran?", ""), 
+    (2, 4, 2, "Beneran? #gapercaya", "#gapercaya "), 
+    (3, 3, 3, "#Wkwk", "#Wkwk "), 
+    (4, 2, 4, "Semangat yaaa", ""), 
+    (5, 1, 5, "Masa sih?", "");

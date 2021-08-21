@@ -136,6 +136,17 @@ class Post
     end
 
     def self.trending 
-        return []
+        trending_hashtags = []
+        client = create_db_client
+        raw_data = client.query("SELECT hashtags, count(*) as count " +
+            "from posts GROUP BY hashtags");
+
+        raw_data.each do |datum|
+            hashtag_len = datum["hashtags"].length
+            hashtag = datum["hashtags"][0, hashtag_len-1]
+            trending_hashtags << hashtag
+        end
+
+        trending_hashtags
     end
 end

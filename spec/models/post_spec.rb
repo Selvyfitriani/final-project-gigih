@@ -315,5 +315,29 @@ describe Post do
                 expect(trending_hashtags.length).to eq(0)
             end
         end
+
+        context 'when there is one trending hashtag' do
+            it 'should return list of hashtag' do
+                user = User.new(
+                    id = 1,
+                    username = 'selvyfitriani31',
+                    email = 'selvyfitriani31@gmail.com',
+                    bio_description = 'a learner'
+                )
+                user.save
+                
+                post = Post.new(
+                    user_id = user.id, 
+                    text = "A new post #gigih",
+                    datetime = (DateTime.now - 0.2).strftime("%F %T")
+                )
+                post.save
+
+                trending_hashtags = Post.trending
+                expected_trending_hashtags = ["#gigih"]
+
+                expect(trending_hashtags).to eq(expected_trending_hashtags)
+            end
+        end
     end
 end

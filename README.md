@@ -28,25 +28,25 @@ The link suggested above is just for option, you can use your own source to inst
 #### Setup the Database
 After you install MySQL, you can create database using SQL script in the root of this repository (``database_schema.sql``)
 
-1. Login into your MySQL
-`` mysql -u root -p ``
+1. Login into your MySQL <br />
+`` mysql -u root -p `` <br />
 Then, insert your password
-2. Run the SQL Script
-`` source \path-to-this-repo\final-project-gigih\database-schema.sql``
+2. Run the SQL Script <br />
+`` source \path-to-this-repo\final-project-gigih\database-schema.sql`` <br />
 This script will create the database and insert some dummy data.
 
 #### Install Dependencies
-This command will install all dependencies in Gemfile
+This command will install all dependencies in Gemfile <br />
 ``bundle install``
 
 
 #### Run the Test Suite
-Point your terminal to this repository root, then simply you can run the command below to run all the test. 
-``rspec spec/``
+Point your terminal to this repository root, then simply you can run the command below to run all the test. <br />
+``rspec spec/`` <br />
 Then, it will create a folder ``coverage`` and you can see the coverage detail in ``coverage\index.html``
 
 #### Run the Application
-To run this application, you just need to run this command in this repository root
+To run this application, you just need to run this command in this repository root <br />
 ``ruby main.rb ``
 
 If you done with this step, you can use the application through the Postman. 

@@ -55,7 +55,7 @@ class PostController
     def trending
         response = {}
         response["status_code"] = "200"
-        response["trending"] = []
+        response["trending"] = Post.trending
 
         JSON.generate(response)
     end

@@ -148,4 +148,20 @@ describe Comment do
             end
         end
     end
+
+    describe '#generate_hashtags' do
+        context 'when text has no hashtags' do
+            it 'should return empty string' do
+                comment = Comment.new(
+                    user_id = 1,
+                    post_id = 1,
+                    text = "A new comment"  
+                )
+            
+                hashtags = comment.generate_hashtags()
+                expected_hashtags = ""
+                expect(hashtags).to eq(expected_hashtags)
+            end
+        end 
+    end
 end

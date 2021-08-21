@@ -32,4 +32,8 @@ class Comment
         return false if @text.length > 1000
         return true
     end
+
+    def generate_hashtags
+        return ""
+    end
 end

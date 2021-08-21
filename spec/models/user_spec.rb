@@ -3,6 +3,11 @@ require "./database/db_connector"
 require './models/user'
 
 describe User do
+    before(:each) do
+        client = create_db_client
+        client.query("DELETE FROM users")
+    end
+    
     describe '#valid?' do
         context 'when initialized with valid attributes value' do
             it 'should return true' do

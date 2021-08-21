@@ -1,4 +1,5 @@
 require "./test_helper"
+require "./database/db_connector"
 require "./models/comment"
 
 describe Comment do
@@ -6,6 +7,7 @@ describe Comment do
         client = create_db_client
         client.query("DELETE FROM users")
         client.query("DELETE FROM posts")
+        client.query("DELETE FROM comments")
     end
 
     describe '#valid?' do

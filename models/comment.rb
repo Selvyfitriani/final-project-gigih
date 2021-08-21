@@ -63,4 +63,31 @@ class Comment
         
         return true
     end
+
+    def self.get_last_insert_id
+        client = create_db_client()
+        raw_data = client.query("SELECT MAX(id) as id FROM comments")
+
+        raw_data.each do |datum|
+            return datum["id"].to_i
+        end    
+    end
+
+    def self.get_by_id(id)
+        client = create_db_client
+        raw_data = client.query("SELECT * FROM comments WHERE id = #{id}")
+        
+        comment = nil
+
+        raw_data.each do |datum|
+            comment = Comment.new(
+                user_id = datum["user_id"], 
+                post_id = datum["post_id"],
+                text = datum["text"]
+            )
+        end
+
+        comment
+    end
+
 end

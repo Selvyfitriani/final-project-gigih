@@ -29,6 +29,7 @@ class Comment
 
     def valid_text?
         return false if @text.empty?
+        return false if @text.length > 1000
         return true
     end
 end

@@ -28,11 +28,13 @@ CREATE TABLE posts(
 -- CREATE TABLE 3: COMMENTS
 CREATE TABLE comments (
     id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
     post_id INT NOT NULL,
     text VARCHAR(1000) NOT NULL,
     hashtags VARCHAR(1000),
     attachment TEXT,    
 
     PRIMARY KEY(id),
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE
 );

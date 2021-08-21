@@ -3,7 +3,7 @@ require "./models/user"
 
 class Post
 
-    attr_accessor :user_id, :text, :datetime
+    attr_accessor :id, :user_id, :text, :datetime
 
     VALID_DATETIME_REGEX = /^\d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2}$/
 
@@ -75,8 +75,14 @@ class Post
         generate_hashtags
 
         client = create_db_client
-        client.query("INSERT INTO posts(user_id, text, datetime, hashtags) " +
-            "VALUES(#{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
+
+        if @id
+            client.query("INSERT INTO posts(id, user_id, text, datetime, hashtags) " +
+                "VALUES(#{@id}, #{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
+        else
+            client.query("INSERT INTO posts(user_id, text, datetime, hashtags) " +
+                "VALUES(#{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
+        end
         return true
     end
 

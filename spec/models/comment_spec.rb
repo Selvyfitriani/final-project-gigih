@@ -1,3 +1,4 @@
+require "./test_helper"
 require "./models/comment"
 
 describe Comment do

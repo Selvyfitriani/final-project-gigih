@@ -286,5 +286,39 @@ describe PostController do
                 expect(response).to eq(expected_response)
             end
         end
+
+        context 'when there are more than one trending hashtag' do
+            it 'should return response with list of hashtags' do
+                user = User.new(
+                    id = 1,
+                    username = 'selvyfitriani31',
+                    email = 'selvyfitriani31@gmail.com',
+                    bio_description = 'a learner'
+                ) 
+                user.save
+                
+                post = Post.new(
+                    user_id = user.id, 
+                    text = "I am a superhero #gigih #semangat",
+                    datetime = "2021-08-21 22:30:05"
+                )
+
+                post_num = 3
+                1.upto(post_num) do |num|
+                    post.save
+                end
+
+                trending_hashtags = Post.trending
+                controller = PostController.new
+                response = controller.trending
+
+                expected_response = JSON.generate({
+                    "status_code" => "200",
+                    "trending" => trending_hashtags
+                })
+
+                expect(response).to eq(expected_response)
+            end
+        end
     end
 end

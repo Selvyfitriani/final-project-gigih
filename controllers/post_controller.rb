@@ -51,4 +51,12 @@ class PostController
 
         json_posts 
     end
+
+    def trending
+        response = {}
+        response["status_code"] = "200"
+        response["trending"] = []
+
+        JSON.generate(response)
+    end
 end

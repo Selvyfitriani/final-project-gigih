@@ -240,4 +240,20 @@ describe PostController do
             end
         end
     end
+
+    describe '#trending' do
+        context 'when there is no trending hashtag' do
+            it 'should return response with empty list' do
+                controller = PostController.new
+                response = controller.trending
+
+                expected_response = JSON.generate({
+                    "status_code" => "200",
+                    "trending" => [] 
+                })
+
+                expect(response).to eq(expected_response)
+            end
+        end
+    end
 end

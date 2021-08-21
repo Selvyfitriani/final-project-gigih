@@ -233,10 +233,50 @@ describe Comment do
 
                 dummy_database = double
                 allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
-                allow(dummy_database).to receive(:query).with("INSERT INTO comments(user_id, post_id, text) " +
-                    "VALUES(#{comment.user_id}, #{comment.post_id}, '#{comment.text}')")
+                allow(dummy_database).to receive(:query).with("INSERT INTO comments(user_id, post_id, text, hashtags) " +
+                    "VALUES(#{comment.user_id}, #{comment.post_id}, '#{comment.text}', '')")
 
                 expect(comment.save).to eq(true)
+            end
+        end
+
+        context 'when given text with hashtags' do
+            it 'should generate all hashtags and save to database' do
+                user = User.new(
+                    id = 1,
+                    username = 'selvyfitriani31',
+                    email = "selvyfitriani31@gmail.com",  
+                    bio_description = 'a learner',
+                )
+                user.save
+                
+                post = Post.new(
+                    id = 1,
+                    user_id = user.id,
+                    text = "A new post",
+                    datetime = "2021-08-21 22:30:05"
+                )
+                post.save
+
+                comment = Comment.new(
+                    user_id = user.id,
+                    post_id = post.id,
+                    text = "A new comment #gigih"  
+                )
+
+                hashtags = comment.generate_hashtags
+
+                dummy_database = double
+                allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
+                allow(dummy_database).to receive(:query).with("INSERT INTO comments" +
+                    "(user_id, post_id, text, hashtags) " +
+                    "VALUES(#{comment.user_id}, #{comment.post_id}, '#{comment.text}', '#{hashtags}')")
+                
+                comment.save
+                
+                expected_hashtags = "#gigih "
+
+                expect(hashtags).to eq(expected_hashtags)
             end
         end
     end

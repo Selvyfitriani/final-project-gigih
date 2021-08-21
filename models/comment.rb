@@ -7,6 +7,7 @@ class Comment
         @user_id = user_id
         @post_id = post_id
         @text = text
+        @hashtags = ""
     end
 
     def valid?
@@ -57,8 +58,8 @@ class Comment
         return false if !valid?
 
         client = create_db_client
-        client.query("INSERT INTO comments(user_id, post_id, text) " + 
-            "VALUES(#{@user_id}, #{@post_id}, '#{@text}')")
+        client.query("INSERT INTO comments(user_id, post_id, text, hashtags) " + 
+            "VALUES(#{@user_id}, #{@post_id}, '#{@text}', '#{@hashtags}')")
         
         return true
     end

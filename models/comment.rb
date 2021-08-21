@@ -34,6 +34,17 @@ class Comment
     end
 
     def generate_hashtags
-        return ""
+        @hashtags = ""
+
+        pieces = @text.split(" ")
+        pieces.each do |piece| 
+            if piece[0, 1] == "#" 
+                hashtag = piece.downcase
+                @hashtags += hashtag
+                @hashtags += " "
+            end 
+        end
+
+        @hashtags
     end
 end

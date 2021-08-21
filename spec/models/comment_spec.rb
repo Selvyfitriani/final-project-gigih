@@ -164,5 +164,19 @@ describe Comment do
                 expect(hashtags).to eq(expected_hashtags)
             end
         end 
+
+        context 'when text has 1 hashtag' do
+            it 'should return string with the hashtag' do
+                comment = Comment.new(
+                    user_id = 1,
+                    post_id = 1,
+                    text = "A new comment #gigih"  
+                )
+
+                hashtags = comment.generate_hashtags
+                expected_hashtags = "#gigih "
+                expect(hashtags).to eq(expected_hashtags)
+            end
+        end
     end
 end

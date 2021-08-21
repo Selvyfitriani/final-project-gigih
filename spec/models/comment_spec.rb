@@ -193,4 +193,51 @@ describe Comment do
             end
         end
     end
+
+    describe '#save' do
+        context 'when given invalid input' do
+            it 'should not save to database and return false' do
+                comment = Comment.new(
+                    user_id = "",
+                    post_id = "",
+                    text = ""
+                )
+
+                expect(comment.save).to eq(false)
+            end
+        end
+
+        context 'when given with valid input' do
+            it 'should save to database and return true' do
+                user = User.new(
+                    id = 1,
+                    username = 'selvyfitriani31',
+                    email = "selvyfitriani31@gmail.com",  
+                    bio_description = 'a learner',
+                )
+                user.save
+                
+                post = Post.new(
+                    id = 1,
+                    user_id = user.id,
+                    text = "A new post",
+                    datetime = "2021-08-21 22:30:05"
+                )
+                post.save
+
+                comment = Comment.new(
+                    user_id = user.id,
+                    post_id = post.id,
+                    text = "A new comment"  
+                )
+
+                dummy_database = double
+                allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
+                allow(dummy_database).to receive(:query).with("INSERT INTO comments(user_id, post_id, text) " +
+                    "VALUES(#{comment.user_id}, #{comment.post_id}, '#{comment.text}')")
+
+                expect(comment.save).to eq(true)
+            end
+        end
+    end
 end

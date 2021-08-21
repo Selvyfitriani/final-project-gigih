@@ -1,4 +1,7 @@
 class Comment 
+
+    attr_accessor :user_id, :post_id, :text
+
     def initialize(id=nil, user_id, post_id, text)
         @id = id
         @user_id = user_id
@@ -48,5 +51,15 @@ class Comment
         end
 
         @hashtags
+    end
+
+    def save
+        return false if !valid?
+
+        client = create_db_client
+        client.query("INSERT INTO comments(user_id, post_id, text) " + 
+            "VALUES(#{@user_id}, #{@post_id}, '#{@text}')")
+        
+        return true
     end
 end

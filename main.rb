@@ -12,12 +12,12 @@ post '/posts/create' do
     controller.create(params)
 end
 
-get '/posts/:hashtag' do
-    controller = PostController.new
-    controller.get_all_by_hashtag(params)
-end
-
 get '/posts/trending' do
     controller = PostController.new
     controller.trending
+end
+
+get '/posts/:hashtag' do
+    controller = PostController.new
+    controller.get_all_by_hashtag(params)
 end

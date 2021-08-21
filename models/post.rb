@@ -134,4 +134,8 @@ class Post
 
         json_post
     end
+
+    def self.trending 
+        return []
+    end
 end

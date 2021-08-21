@@ -306,4 +306,14 @@ describe Post do
             end
         end
     end 
+
+    describe '#trending' do
+        context 'when there is no trending hashtag' do
+            it 'should return empty list' do
+                trending_hashtags = Post.trending
+                
+                expect(trending_hashtags.length).to eq(0)
+            end
+        end
+    end
 end

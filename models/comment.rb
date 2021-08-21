@@ -40,8 +40,10 @@ class Comment
         pieces.each do |piece| 
             if piece[0, 1] == "#" 
                 hashtag = piece.downcase
-                @hashtags += hashtag
-                @hashtags += " "
+                if !@hashtags.include? hashtag
+                    @hashtags += hashtag
+                    @hashtags += " "
+                end
             end 
         end
 

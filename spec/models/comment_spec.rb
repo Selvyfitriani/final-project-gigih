@@ -178,5 +178,19 @@ describe Comment do
                 expect(hashtags).to eq(expected_hashtags)
             end
         end
+
+        context 'when text contain multiple instances of a hashtag' do
+            it 'should return only one hashtag' do
+                comment = Comment.new(
+                    user_id = 1,
+                    post_id = 1,
+                    text = "#hashtag #hashtaG #hasHtag"
+                )
+
+                hashtags = comment.generate_hashtags()
+                expected_hashtags = "#hashtag "
+                expect(hashtags).to eq(expected_hashtags)
+            end
+        end
     end
 end

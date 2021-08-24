@@ -1,12 +1,12 @@
-require "mysql2"
+require 'mysql2'
 
 def create_db_client
-  puts(ENV["DB_NAME"])
+ 
   client = Mysql2::Client.new(
-    :host => ENV["DB_HOST"],
-    :username => ENV["DB_USER"],
-    :password => ENV["DB_PASSWORD"],
-    :database => ENV["DB_NAME"]
+    :host => ENV['DB_HOST'],
+    :username => ENV['DB_USER'],
+    :password => ENV['DB_PASSWORD'],
+    :database => ENV['DB_NAME']
   )
 
   client

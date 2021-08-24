@@ -146,12 +146,11 @@ class Post
         
         counted_hashtag = get_counted_hashtag(hashtags_in_24_hours)
         counted_hashtag = counted_hashtag.sort_by{|hashtag, count| count}
-        
+      
         top_5_hashtag = counted_hashtag.last(5).reverse
-        
+    
         trending_hashtags = []
-        top_5_hashtag.each do |hashtag, count|
-            
+        top_5_hashtag.each do |hashtag, count|        
             trending_hashtags << hashtag
         end
         
@@ -160,20 +159,30 @@ class Post
 
     def self.get_all_hashtag_in_24_hours
         client = create_db_client
-        raw_data = client.query("SELECT hashtags FROM posts " +
-            "WHERE TIMESTAMPDIFF (HOUR, now(), datetime) > -24");
-        
+        raw_data = client.query("SELECT posts.id AS id, posts.hashtags AS post_hashtags, comments.hashtags AS comment_hashtags " + 
+            "FROM posts " +
+            "LEFT JOIN comments " +
+            "ON posts.id = comments.post_id " + 
+            "WHERE TIMESTAMPDIFF(HOUR, now(), posts.datetime) > -24"
+        ) 
+
         hashtags = []
 
         raw_data.each do |datum|
-            hastagh_in_a_post = split_hashtags(datum["hashtags"])
-            hashtags += hastagh_in_a_post
+            hashtag_in_a_post = split_hashtags(datum["post_hashtags"])
+            hashtag_in_a_comment = split_hashtags(datum["comment_hashtags"])
+            hashtags += hashtag_in_a_post
+            hashtags += hashtag_in_a_comment
         end
 
         hashtags
     end
 
     def self.split_hashtags(hashtags)
+        if hashtags.nil?
+          return []
+        end
+
         no_punctuation_hastaghs = hashtags.gsub(/[^a-z0-9\#]/, '')
         splitted_hastaghs = no_punctuation_hastaghs.split("#")
 

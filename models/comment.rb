@@ -39,7 +39,7 @@ class Comment
 
     def generate_hashtags
         @hashtags = ""
-
+    
         pieces = @text.split(" ")
         pieces.each do |piece| 
             if piece[0, 1] == "#" 
@@ -57,6 +57,8 @@ class Comment
     def save
         return false if !valid?
 
+        generate_hashtags
+    
         client = create_db_client
         client.query("INSERT INTO comments(user_id, post_id, text, hashtags) " + 
             "VALUES(#{@user_id}, #{@post_id}, '#{@text}', '#{@hashtags}')")

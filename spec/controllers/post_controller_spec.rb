@@ -31,8 +31,8 @@ describe PostController do
                 post_controller = PostController.new
                 response = post_controller.create(post_params)
 
-                post_id = Post.get_last_insert_id()
-                expected_post = Post.get_by_id(post_id)
+                post_id = Post.last_insert_id()
+                expected_post = Post.find_by_id(post_id)
                 expect(expected_post).not_to be nil
 
                 expected_response = JSON.generate({"status_code" => "201", "message" => "Successfully insert post to database"})
@@ -51,8 +51,8 @@ describe PostController do
                 controller = PostController.new
                 response = controller.create(params)
 
-                post_id = Post.get_last_insert_id()
-                expected_post = Post.get_by_id(post_id)
+                post_id = Post.last_insert_id()
+                expected_post = Post.find_by_id(post_id)
                 expect(expected_post).to be nil
 
                 expected_response = JSON.generate({"status_code" => "400", "message" => "Sorry! Creating new post is failed because invalid parameters"})
@@ -87,11 +87,7 @@ describe PostController do
                 ) 
                 user.save
                 
-                post = Post.new(
-                    user_id = user.id, 
-                    text = "I am a superhero #gigih #Semangat",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id, "I am a superhero #gigih #Semangat", "2021-08-21 22:30:05")
                 post.save
 
                 params = { "hashtag" => "gigih" }
@@ -118,11 +114,7 @@ describe PostController do
                 ) 
                 user.save
                 
-                post = Post.new(
-                    user_id = user.id, 
-                    text = "I am a superhero #gigih #Semangat",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id, "I am a superhero #gigih #Semangat", "2021-08-21 22:30:05")
                 
                 post_num = 3
                 1.upto(post_num) do |num|
@@ -169,11 +161,7 @@ describe PostController do
                 ) 
                 user.save
                 
-                post = Post.new(
-                    user_id = user.id, 
-                    text = "I am a superhero #gigih #Semangat",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id, "I am a superhero #gigih #Semangat", "2021-08-21 22:30:05")
                 post.save
 
                 search_hashtag = "gigih"
@@ -202,11 +190,7 @@ describe PostController do
                 ) 
                 user.save
                 
-                post = Post.new(
-                    user_id = user.id, 
-                    text = "I am a superhero #gigih #Semangat",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id, "I am a superhero #gigih #Semangat", "2021-08-21 22:30:05")
                 
                 post_num = 3
                 1.upto(post_num) do |num|
@@ -267,11 +251,7 @@ describe PostController do
                 ) 
                 user.save
                 
-                post = Post.new(
-                    user_id = user.id, 
-                    text = "I am a superhero #gigih",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id, "I am a superhero #gigih", "2021-08-21 22:30:05")
 
                 post.save
 
@@ -298,11 +278,7 @@ describe PostController do
                 ) 
                 user.save
                 
-                post = Post.new(
-                    user_id = user.id, 
-                    text = "I am a superhero #gigih #semangat",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id, "I am a superhero #gigih #semangat", "2021-08-21 22:30:05")
 
                 post_num = 3
                 1.upto(post_num) do |num|

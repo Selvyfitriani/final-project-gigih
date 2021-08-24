@@ -21,12 +21,8 @@ describe Comment do
                 )
                 user.save
                 
-                post = Post.new(
-                    id = 1,
-                    user_id = user.id,
-                    text = "A new post",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id, "A new post", "2021-08-21 22:30:05", 1)
+                  
                 post.save
 
                 comment = Comment.new(
@@ -49,12 +45,8 @@ describe Comment do
                 )
                 user.save
                 
-                post = Post.new(
-                    id = 1,
-                    user_id = user.id,
-                    text = "A new post",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id, "A new post", "2021-08-21 22:30:05", 1)
+                   
                 post.save
 
                 comment = Comment.new(
@@ -77,12 +69,8 @@ describe Comment do
                 )
                 user.save
                 
-                post = Post.new(
-                    id = 1,
-                    user_id = user.id,
-                    text = "A new post",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new( user.id, "A new post", "2021-08-21 22:30:05", 1)
+                    
                 post.save
 
                 comment = Comment.new(
@@ -105,12 +93,8 @@ describe Comment do
                 )
                 user.save
                 
-                post = Post.new(
-                    id = 1,
-                    user_id = user.id,
-                    text = "A new post",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id,"A new post", "2021-08-21 22:30:05", 1)
+                
                 post.save
 
                 comment = Comment.new(
@@ -133,12 +117,8 @@ describe Comment do
                 )
                 user.save
                 
-                post = Post.new(
-                    id = 1,
-                    user_id = user.id,
-                    text = "A new post",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id,"A new post", "2021-08-21 22:30:05", 1)
+                
                 post.save
 
                 comment = Comment.new(
@@ -219,12 +199,8 @@ describe Comment do
                 )
                 user.save
                 
-                post = Post.new(
-                    id = 1,
-                    user_id = user.id,
-                    text = "A new post",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id,"A new post", "2021-08-21 22:30:05", 1)
+                
                 post.save
 
                 comment = Comment.new(
@@ -252,12 +228,8 @@ describe Comment do
                 )
                 user.save
                 
-                post = Post.new(
-                    id = 1,
-                    user_id = user.id,
-                    text = "A new post",
-                    datetime = "2021-08-21 22:30:05"
-                )
+                post = Post.new(user.id,"A new post", "2021-08-21 22:30:05", 1)
+                
                 post.save
 
                 comment = Comment.new(

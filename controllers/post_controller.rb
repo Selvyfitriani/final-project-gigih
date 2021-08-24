@@ -3,12 +3,7 @@ require './models/post'
 
 class PostController 
     def create(params)
-        post = Post.new(
-            id = params["id"],
-            user_id = params["user_id"],
-            text = params["text"],
-            datetime = params["datetime"]
-        )
+        post = Post.new(params["user_id"], params["text"], params["datetime"], params["id"])
         
         user = User.get_by_id(post.user_id)
         

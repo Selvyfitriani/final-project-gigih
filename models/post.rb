@@ -146,7 +146,6 @@ class Post
         
         counted_hashtag = get_counted_hashtag(hashtags_in_24_hours)
         counted_hashtag = counted_hashtag.sort_by{|hashtag, count| count}
-      
         top_5_hashtag = counted_hashtag.last(5).reverse
     
         trending_hashtags = []
@@ -167,9 +166,14 @@ class Post
         ) 
 
         hashtags = []
-
+        id_containers = []
         raw_data.each do |datum|
-            hashtag_in_a_post = split_hashtags(datum["post_hashtags"])
+            post_id = datum["id"]
+            hashtag_in_a_post = []
+            if !id_containers.include?(post_id)
+              id_containers << post_id
+              hashtag_in_a_post = split_hashtags(datum["post_hashtags"])
+            end
             hashtag_in_a_comment = split_hashtags(datum["comment_hashtags"])
             hashtags += hashtag_in_a_post
             hashtags += hashtag_in_a_comment

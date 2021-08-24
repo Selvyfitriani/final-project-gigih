@@ -397,5 +397,76 @@ describe Post do
                 expect(trending_hashtags).to eq(expected_trending_hashtags)
             end
         end
+
+        context 'when there are two comment with hashtags in one post' do
+          it 'should rcount hashtags in post just one time' do
+              user = User.new(
+                  id = 1,
+                  username = 'selvyfitriani31',
+                  email = "selvyfitriani31@gmail.com",  
+                  bio_description = 'a learner'
+              )
+              user.save
+              
+              post = Post.new(
+                  id = 1,
+                  user_id = user.id,
+                  text = "A new post #gigih",
+                  datetime = (DateTime.now - 0.2).strftime("%F %T")
+              )
+              post.save
+
+              comment = Comment.new(
+                  user_id = user.id,
+                  post_id = post.id,
+                  text = "A new comment #semangat"  
+              )
+              
+              comment_num = 2
+
+              1.upto(comment_num) do |num|
+                comment.save
+              end
+              
+
+              trending_hashtags = Post.trending
+              expected_trending_hashtags = ["#semangat", "#gigih"]
+
+              expect(trending_hashtags).to eq(expected_trending_hashtags)
+          end
+      end
+
+        context 'when there is hashtag in comment' do
+            it 'should counted in trending' do
+                user = User.new(
+                    id = 1,
+                    username = 'selvyfitriani31',
+                    email = "selvyfitriani31@gmail.com",  
+                    bio_description = 'a learner'
+                )
+                user.save
+                
+                post = Post.new(
+                    id = 1,
+                    user_id = user.id,
+                    text = "A new post",
+                    datetime = (DateTime.now - 0.2).strftime("%F %T")
+                )
+                post.save
+
+                comment = Comment.new(
+                    user_id = user.id,
+                    post_id = post.id,
+                    text = "A new comment #gigih"  
+                )
+                
+                comment.save
+
+                trending_hashtags = Post.trending
+                expected_trending_hashtags = ["#gigih"]
+
+                expect(trending_hashtags).to eq(expected_trending_hashtags)
+            end
+        end
     end
 end

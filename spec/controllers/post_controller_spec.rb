@@ -79,12 +79,7 @@ describe PostController do
 
         context 'when there is one post that contain hashtag' do
             it 'should return the post in a list' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = 'selvyfitriani31@gmail.com',
-                    bio_description = 'a learner'
-                ) 
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id, "I am a superhero #gigih #Semangat", "2021-08-21 22:30:05")
@@ -106,12 +101,7 @@ describe PostController do
 
         context 'when there are more than one post' do
             it 'should return list of posts in json format' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = 'selvyfitriani31@gmail.com',
-                    bio_description = 'a learner'
-                ) 
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id, "I am a superhero #gigih #Semangat", "2021-08-21 22:30:05")
@@ -153,12 +143,7 @@ describe PostController do
 
         context 'when there is one post' do
             it 'should return list of detail post in json format' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = 'selvyfitriani31@gmail.com',
-                    bio_description = 'a learner'
-                ) 
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id, "I am a superhero #gigih #Semangat", "2021-08-21 22:30:05")
@@ -182,12 +167,7 @@ describe PostController do
 
         context 'when there are more than one post' do
             it 'should return list of detail posts in json format' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = 'selvyfitriani31@gmail.com',
-                    bio_description = 'a learner'
-                ) 
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id, "I am a superhero #gigih #Semangat", "2021-08-21 22:30:05")
@@ -243,12 +223,7 @@ describe PostController do
 
         context 'when there is one trending hashtag' do
             it 'should return response with list of hashtag' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = 'selvyfitriani31@gmail.com',
-                    bio_description = 'a learner'
-                ) 
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id, "I am a superhero #gigih", "2021-08-21 22:30:05")
@@ -270,12 +245,7 @@ describe PostController do
 
         context 'when there are more than one trending hashtag' do
             it 'should return response with list of hashtags' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = 'selvyfitriani31@gmail.com',
-                    bio_description = 'a learner'
-                ) 
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id, "I am a superhero #gigih #semangat", "2021-08-21 22:30:05")

@@ -2,99 +2,79 @@ require "./database/db_connector"
 
 class User
 
-    # Source valid email regex: https://www.youtube.com/watch?v=Ch-KRivqmzU
-    # docs of regex: https://rubular.com/
-    <<-RegexExplanation
-        1. Regex is start with '/' and end with '/', but 'i' after '/' indicate insensitive case
-        2. \A and \z at first and last respectively means regex must start and end with string.
-        3. First part of email is \A([\w+\-].?)+ 
-            a. [\w+\-] indicate first part must contain at least one characters (letter, number, underscore) and can have dash
-            b. .? indicate first part can contain at most one any single character
-            c. So, ([\w+\-].?)+ means first part of email must contain at least one character 
-        4. Second Part is @[a-z\d\-]+
-            a. Plus in the last means 'at least one'
-            b. [a-z\d\-] means second part can contains letter, any digit (\d) and dash. It's for domain
-            c. So, @[a-z\d\-]+ means second part must contain '@' followed by domain.
-        5. Last Part is (\.[a-z]+)*\.[a-z]+
-            a. \.[a-z]+ --> indicate second domain with format . followed by any letter
-            b. * means at least zero. So, (\.[a-z]+)* means at least zero second domain
-            c. \.[a-z]+ neans at least one second domain
-            d. So, (\.[a-z]+)*\.[a-z]+ means last part must contain at least second domain
-    RegexExplanation
+  # Source valid email regex: https://www.youtube.com/watch?v=Ch-KRivqmzU
+  # docs of regex: https://rubular.com/
 
-    attr_accessor :id, :username, :email, :bio_description
+  attr_accessor :id, :username, :email, :bio_description
 
-    VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-        
-    def initialize(id=nil, username, email, bio_description)
-        @id = id
-        @username = username
-        @email = email
-        @bio_description = bio_description
+  VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i.freeze
+
+  def initialize(username, email, bio_description, id = nil)
+    @id = id
+    @username = username
+    @email = email
+    @bio_description = bio_description
+  end
+
+  def valid?
+    return false unless valid_username?
+    return false unless valid_email?
+    return false unless valid_bio?
+
+    true
+  end
+
+  def valid_username?
+    !@username.empty? && @username.length <= 30
+  end
+
+  def valid_email?
+    @email =~ VALID_EMAIL_REGEX
+  end
+
+  def valid_bio?
+    !@bio_description.empty? && @bio_description.length <= 150
+  end
+
+  def save
+    return false unless valid?
+
+    client = create_db_client
+
+    if @id
+      client.query("INSERT INTO users(id, username, email, bio_description)
+          VALUES(#{@id}, '#{@username}', '#{@email}', '#{bio_description}')")
+    else
+      client.query("INSERT INTO users(username, email, bio_description)
+          VALUES('#{@username}', '#{@email}', '#{bio_description}')")
     end
 
-    def valid?
-        return false if (!valid_username?)
-        return false if (!valid_email?)
-        return false if (!valid_bio?)
-        return true
+    true
+  end
+
+  def self.get_last_insert_id
+    client = create_db_client
+    raw_data = client.query('SELECT MAX(id) as id FROM users')
+
+    raw_data.each do |datum|
+      return datum['id'].to_i
+    end
+  end
+
+  def self.get_by_id(id)
+    client = create_db_client
+    raw_data = client.query("SELECT * FROM users WHERE id = #{id}")
+
+    user = nil
+    raw_data.each do |datum|
+      user = User.new(datum['username'], datum['email'], datum['bio_description'])
     end
 
-    def valid_username?
-        return !@username.empty? && @username.length <= 30
-    end
+    user
+  end
 
-    def valid_email? 
-        return @email =~ VALID_EMAIL_REGEX
-    end
-
-    def valid_bio?
-        return !@bio_description.empty? && @bio_description.length <= 150
-    end    
-
-    def save
-        return false if !valid?
-
-        client = create_db_client
-
-        if @id
-            client.query("INSERT INTO users(id, username, email, bio_description) " +
-                "VALUES(#{@id}, '#{@username}', '#{@email}', '#{bio_description}')")
-        else 
-            client.query("INSERT INTO users(username, email, bio_description) " +
-                "VALUES('#{@username}', '#{@email}', '#{bio_description}')")
-        end
-
-        return true
-    end
-
-    def self.get_last_insert_id
-        client = create_db_client()
-        raw_data = client.query("SELECT MAX(id) as id FROM users")
-
-        raw_data.each do |datum|
-            return datum["id"].to_i
-        end    
-    end
-
-    def self.get_by_id(id)
-        client = create_db_client
-        raw_data = client.query("SELECT * FROM users WHERE id = #{id}")
-        
-        user = nil
-        raw_data.each do |datum|
-            user = User.new(
-                username = datum["username"], 
-                email = datum["email"], 
-                bio_description = datum["bio_description"]
-            )
-        end
-
-        user
-    end
-
-    def self.delete(id)
-        client = create_db_client
-        client.query("DELETE FROM users WHERE id=#{id}")
-    end
+  def self.delete(id)
+    client = create_db_client
+    client.query("DELETE FROM users WHERE id=#{id}")
+  end
 end

@@ -13,12 +13,7 @@ describe Comment do
     describe '#valid?' do
         context 'when given valid attributes value' do
             it 'should return true' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = "selvyfitriani31@gmail.com",  
-                    bio_description = 'a learner',
-                )
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id, "A new post", "2021-08-21 22:30:05", 1)
@@ -37,12 +32,7 @@ describe Comment do
 
         context 'when given user id with alphabetical form' do
             it 'should return false' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = "selvyfitriani31@gmail.com",  
-                    bio_description = 'a learner',
-                )
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id, "A new post", "2021-08-21 22:30:05", 1)
@@ -61,12 +51,7 @@ describe Comment do
 
         context 'when given post id with alphabetical form' do
             it 'should return false' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = "selvyfitriani31@gmail.com",  
-                    bio_description = 'a learner',
-                )
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new( user.id, "A new post", "2021-08-21 22:30:05", 1)
@@ -85,12 +70,7 @@ describe Comment do
 
         context 'when given empty text' do
             it 'should return false' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = "selvyfitriani31@gmail.com",  
-                    bio_description = 'a learner',
-                )
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id,"A new post", "2021-08-21 22:30:05", 1)
@@ -109,12 +89,7 @@ describe Comment do
 
         context 'when given more than 1000 chars of text' do
             it 'should return false' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = "selvyfitriani31@gmail.com",  
-                    bio_description = 'a learner',
-                )
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id,"A new post", "2021-08-21 22:30:05", 1)
@@ -191,12 +166,7 @@ describe Comment do
 
         context 'when given with valid input' do
             it 'should save to database and return true' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = "selvyfitriani31@gmail.com",  
-                    bio_description = 'a learner',
-                )
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id,"A new post", "2021-08-21 22:30:05", 1)
@@ -220,12 +190,7 @@ describe Comment do
 
         context 'when given text with hashtags' do
             it 'should generate all hashtags and save to database' do
-                user = User.new(
-                    id = 1,
-                    username = 'selvyfitriani31',
-                    email = "selvyfitriani31@gmail.com",  
-                    bio_description = 'a learner',
-                )
+                user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
                 user.save
                 
                 post = Post.new(user.id,"A new post", "2021-08-21 22:30:05", 1)

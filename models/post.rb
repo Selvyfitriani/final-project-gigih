@@ -82,12 +82,12 @@ class Post
 
     if @id
       client.query("INSERT INTO posts
-        (id, user_id, text, datetime, hashtags)
-        VALUES(#{@id}, #{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
+          (id, user_id, text, datetime, hashtags)
+          VALUES(#{@id}, #{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
     else
       client.query("INSERT INTO posts
-        (user_id, text, datetime, hashtags)
-        VALUES(#{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
+          (user_id, text, datetime, hashtags)
+          VALUES(#{@user_id}, '#{@text}', '#{@datetime}', '#{@hashtags}')")
     end
 
     true

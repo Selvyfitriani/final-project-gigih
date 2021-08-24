@@ -288,12 +288,7 @@ describe Post do
 
         post.save
 
-        comment = Comment.new(
-          user_id = user.id,
-          post_id = post.id,
-          text = 'A new comment #semangat'  
-        )
-
+        comment = Comment.new(user.id, post.id, 'A new comment #semangat')
         comment_num = 2
 
         1.upto(comment_num) do |num|
@@ -316,12 +311,7 @@ describe Post do
 
         post.save
 
-        comment = Comment.new(
-          user_id = user.id,
-          post_id = post.id,
-          text = 'A new comment #gigih'
-        )
-
+        comment = Comment.new(user.id, post.id, 'A new comment #gigih')
         comment.save
 
         trending_hashtags = Post.trending

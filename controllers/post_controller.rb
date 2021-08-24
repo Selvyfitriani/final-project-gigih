@@ -1,7 +1,7 @@
 require 'json'
 require './models/post'
 
-class PostController 
+class PostController
   def create(params)
     post = Post.new(params['user_id'], params['text'], params['datetime'], params['id'])
 
@@ -16,8 +16,7 @@ class PostController
       response['message'] = 'Sorry! Creating new post is failed because invalid parameters'
     end
 
-    response = JSON.generate(response)
-    response
+    JSON.generate(response)
   end
 
   def get_all_by_hashtag(params)

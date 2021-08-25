@@ -59,7 +59,7 @@ describe Attachment do
         post = Post.new(user.id, 'A new post', '2021-08-21 22:30:05', 1)
         post.save
 
-        comment = Comment.new( user.id, post.id, 'A new comment')
+        comment = Comment.new(user.id, post.id, 'A new comment')
         comment.save
 
         attachment = Attachment.new('filename.png', 'image/png', nil, 1)
@@ -72,6 +72,15 @@ describe Attachment do
         response = attachment.save
 
         expect(response).to eq(true)
+      end
+    end
+
+    context 'when given invalid attachment' do
+      it 'should not save to database and return false' do
+        attachment = Attachment.new('', '', 1)
+
+        response = attachment.save
+        expect(response).to eq(false)
       end
     end
   end

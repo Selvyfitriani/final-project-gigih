@@ -31,6 +31,8 @@ class Attachment
   end
 
   def save
+    return false unless valid?
+
     client = create_db_client
 
     if valid_post_id?

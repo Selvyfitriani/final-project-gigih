@@ -1,5 +1,7 @@
 class Attachment
 
+  attr_accessor :filename, :type, :post_id, :comment_id
+
   def initialize(filename, type, post_id = nil, comment_id = nil, id = nil)
     @filename = filename
     @type = type
@@ -28,4 +30,11 @@ class Attachment
     false
   end
 
+  def save
+    client = create_db_client
+    client.query("INSERT INTO attachment(filename, type, post_id)
+          VALUES('#{@filename}', '#{@type}', #{@post_id}")
+
+    true
+  end
 end

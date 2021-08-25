@@ -39,7 +39,7 @@ CREATE TABLE comments (
     FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE
 );
 
-CREATE TABLE attachment (
+CREATE TABLE attachments (
     id INT NOT NULL AUTO_INCREMENT, 
     post_id INT,
     comment_id INT,

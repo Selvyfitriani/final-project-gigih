@@ -40,7 +40,7 @@ class Attachment
           VALUES('#{@filename}', '#{@type}', #{@post_id})")
     elsif valid_comment_id?
       client.query("INSERT INTO attachments(filename, type, comment_id)
-          VALUES('#{@filename}', '#{@type}', #{@post_id})")
+          VALUES('#{@filename}', '#{@type}', #{@comment_id})")
     end
 
     true

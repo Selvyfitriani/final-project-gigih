@@ -2,9 +2,13 @@ require './models/attachment'
 
 class AttachmentController
   def create(params)
-    attachment = Attachment.new(params['filename'], params['type'], params['post_id'])
-
-    attachment.save
+    attachment = nil
+    
+    if params['post_id']
+      attachment = create_post_attachment(params)
+    elsif params['comment_id']
+      attachment = create_comment_attachment(params)
+    end
 
     post = Post.find_by_id(attachment.post_id)
 
@@ -18,5 +22,19 @@ class AttachmentController
     end
 
     JSON.generate(response)
+  end
+
+  def create_post_attachment(params)
+    attachment = Attachment.new(params['filename'], params['type'], params['post_id'])
+    attachment.save
+
+    attachment
+  end
+  
+  def create_comment_attachment(params)
+    attachment = Attachment.new(params['filename'], params['type'], params['comment_id'])
+    attachment.save
+
+    attachment
   end
 end

@@ -42,8 +42,8 @@ describe Attachment do
 
         dummy_database = double
         allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
-        allow(dummy_database).to receive(:query).with("INSERT INTO attachment(filename, type, post_id)
-          VALUES('#{attachment.filename}', '#{attachment.type}', #{attachment.post_id}")
+        allow(dummy_database).to receive(:query).with("INSERT INTO attachments(filename, type, post_id)
+          VALUES('#{attachment.filename}', '#{attachment.type}', #{attachment.post_id})")
 
         response = attachment.save
 
@@ -66,8 +66,8 @@ describe Attachment do
 
         dummy_database = double
         allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
-        allow(dummy_database).to receive(:query).with("INSERT INTO attachment(filename, type, comment_id)
-          VALUES('#{attachment.filename}', '#{attachment.type}', #{attachment.post_id}")
+        allow(dummy_database).to receive(:query).with("INSERT INTO attachments(filename, type, comment_id)
+          VALUES('#{attachment.filename}', '#{attachment.type}', #{attachment.comment_id})")
 
         response = attachment.save
 

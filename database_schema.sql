@@ -39,6 +39,18 @@ CREATE TABLE comments (
     FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE
 );
 
+CREATE TABLE attachment (
+    id INT NOT NULL AUTO_INCREMENT, 
+    post_id INT,
+    comment_id INT,
+    filename VARCHAR(200) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+
+    PRIMARY KEY(id),
+    FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    FOREIGN KEY(comment_id) REFERENCES comments(id) ON DELETE CASCADE
+);
+
 -- INSERTING SOME DATA TO DATABASE --
 INSERT INTO users(id, username, email, bio_description)
 VALUES

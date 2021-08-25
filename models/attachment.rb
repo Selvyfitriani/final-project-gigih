@@ -32,8 +32,14 @@ class Attachment
 
   def save
     client = create_db_client
-    client.query("INSERT INTO attachment(filename, type, post_id)
+
+    if valid_post_id?
+      client.query("INSERT INTO attachment(filename, type, post_id)
           VALUES('#{@filename}', '#{@type}', #{@post_id}")
+    elsif valid_comment_id?
+      client.query("INSERT INTO attachment(filename, type, comment_id)
+          VALUES('#{@filename}', '#{@type}', #{@post_id}")
+    end
 
     true
   end

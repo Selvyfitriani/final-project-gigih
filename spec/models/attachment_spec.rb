@@ -2,6 +2,7 @@ require './database/db_connector'
 require './models/attachment'
 require './models/user'
 require './models/post'
+require './models/comment'
 
 describe Attachment do
   describe '#valid?' do
@@ -42,6 +43,30 @@ describe Attachment do
         dummy_database = double
         allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
         allow(dummy_database).to receive(:query).with("INSERT INTO attachment(filename, type, post_id)
+          VALUES('#{attachment.filename}', '#{attachment.type}', #{attachment.post_id}")
+
+        response = attachment.save
+
+        expect(response).to eq(true)
+      end
+    end
+
+    context 'when given valid  attachment for a post' do
+      it 'should save to database and return true' do
+        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
+        user.save
+
+        post = Post.new(user.id, 'A new post', '2021-08-21 22:30:05', 1)
+        post.save
+
+        comment = Comment.new( user.id, post.id, 'A new comment')
+        comment.save
+
+        attachment = Attachment.new('filename.png', 'image/png', nil, 1)
+
+        dummy_database = double
+        allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
+        allow(dummy_database).to receive(:query).with("INSERT INTO attachment(filename, type, comment_id)
           VALUES('#{attachment.filename}', '#{attachment.type}', #{attachment.post_id}")
 
         response = attachment.save

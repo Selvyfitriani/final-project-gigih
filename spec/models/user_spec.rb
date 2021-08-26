@@ -2,7 +2,7 @@ require './test_helper'
 require './database/db_connector'
 require './models/user'
 
-describe User do
+describe User do 
   before(:each) do
     client = create_db_client
     client.query('DELETE FROM users')
@@ -31,15 +31,14 @@ describe User do
     end
   end
 
-  describe '#save' do 
+  describe '#save' do
     context 'when initialized with valid attributes value' do
       it 'should save to database' do
         user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner')
         dummy_database = double
         allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
         expect(dummy_database).to receive(:query).with("INSERT INTO users(username, email, bio_description)
-          VALUES('#{user.username}', '#{user.email}', '#{user.bio_description}')"
-        )
+          VALUES('#{user.username}', '#{user.email}', '#{user.bio_description}')")
 
         user.save
       end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 require './controllers/user_controller'
 require './controllers/post_controller'

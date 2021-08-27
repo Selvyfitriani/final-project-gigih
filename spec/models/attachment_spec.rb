@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './database/db_connector'
 require './models/attachment'
 require './models/user'

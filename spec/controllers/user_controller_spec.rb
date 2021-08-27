@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './test_helper'
 require './database/db_connector'
 require './controllers/user_controller'
@@ -25,7 +27,12 @@ describe UserController do
         expected_user = User.get_by_id(user_id)
         expect(expected_user).not_to be nil
 
-        expected_response = JSON.generate({'status_code' => '201', 'message' => 'Successfully insert user to database'})
+        expected_response = JSON.generate(
+          {
+            'status_code' => '201',
+            'message' => 'Successfully insert user to database'
+          }
+        )
         expect(response).to eq(expected_response)
       end
     end
@@ -45,7 +52,12 @@ describe UserController do
         expected_user = User.get_by_id(user_id)
         expect(expected_user).to be nil
 
-        expected_response = JSON.generate({'status_code' => '400', 'message' => 'Sorry! Creating new user is failed because invalid parameters'})
+        expected_response = JSON.generate(
+          {
+            'status_code' => '400',
+            'message' => 'Sorry! Creating new user is failed because invalid parameters'
+          }
+        )
         expect(response).to eq(expected_response)
       end
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './test_helper'
 require './database/db_connector'
 require './controllers/user_controller'
@@ -46,7 +48,12 @@ describe CommentController do
         expected_comment = Comment.get_by_id(comment_id)
         expect(expected_comment).not_to be nil
 
-        expected_response = JSON.generate({'status_code' => '201', 'message' => 'Successfully insert comment to database'})
+        expected_response = JSON.generate(
+          {
+            'status_code' => '201',
+            'message' => 'Successfully insert comment to database'
+          }
+        )
         expect(response).to eq(expected_response)
       end
     end
@@ -66,7 +73,12 @@ describe CommentController do
         expected_comment = Comment.get_by_id(comment_id)
         expect(expected_comment).to be nil
 
-        expected_response = JSON.generate({'status_code' => '400', 'message' => 'Sorry! Creating new comment is failed because invalid parameters'})
+        expected_response = JSON.generate(
+          {
+            'status_code' => '400', 
+            'message' => 'Sorry! Creating new comment is failed because invalid parameters'
+          }
+        )
         expect(response).to eq(expected_response)
       end
     end

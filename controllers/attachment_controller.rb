@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require './models/attachment'
 
 class AttachmentController
   def create(params)
     attachment = nil
-    
+
     if params['post_id']
       attachment = create_post_attachment(params)
     elsif params['comment_id']
@@ -30,7 +32,7 @@ class AttachmentController
 
     attachment
   end
-  
+
   def create_comment_attachment(params)
     attachment = Attachment.new(params['filename'], params['type'], params['comment_id'])
     attachment.save

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './controllers/attachment_controller'
 require './controllers/user_controller'
 require './controllers/post_controller'
@@ -45,7 +47,12 @@ describe AttachmentController do
         attachment = Attachment.find_by_id(attachment_id)
         expect(attachment).not_to be nil
 
-        expected_response = JSON.generate({'status_code' => '201', 'message' => 'Successfully insert attachment to database'})
+        expected_response = JSON.generate(
+          {
+            'status_code' => '201',
+            'message' => 'Successfully insert attachment to database'
+          }
+        )
         expect(response).to eq(expected_response)
       end
     end
@@ -92,10 +99,14 @@ describe AttachmentController do
         attachment = Attachment.find_by_id(attachment_id)
         expect(attachment).not_to be nil
 
-        expected_response = JSON.generate({'status_code' => '201', 'message' => 'Successfully insert attachment to database'})
+        expected_response = JSON.generate(
+          {
+            'status_code' => '201',
+            'message' => 'Successfully insert attachment to database'
+          }
+        )
         expect(response).to eq(expected_response)
       end
     end
   end
-  
 end

@@ -1,3 +1,4 @@
+require './controllers/response_generator'
 require 'json'
 require './models/post'
 
@@ -7,14 +8,12 @@ class PostController
 
     user = User.get_by_id(post.user_id)
 
-    response = {}
-    if user && post.save
-      response['status_code'] = '201'
-      response['message'] = 'Successfully insert post to database'
-    else
-      response['status_code'] = '400'
-      response['message'] = 'Sorry! Creating new post is failed because invalid parameters'
-    end
+    response = 
+      if user && post.save
+        ResponseGenerator.success_response('Successfully insert post to database')
+      else
+        ResponseGenerator.failed_response('Sorry! Creating new post is failed because invalid parameters')
+      end
 
     JSON.generate(response)
   end
@@ -23,9 +22,12 @@ class PostController
     hashtag = params['hashtag']
     posts = Post.get_all_by_hashtag(hashtag)
 
-    response = {}
-    response['status_code'] = '200'
-    response['posts'] = []
+    response = ResponseGenerator.create_response(
+      {
+        'status_code' => '200',
+        'posts' => []
+      }
+    )
 
     posts.each do |post|
       json_post = post.to_json
@@ -47,9 +49,12 @@ class PostController
   end
 
   def trending
-    response = {}
-    response['status_code'] = '200'
-    response['trending'] = Post.trending
+    response = ResponseGenerator.create_response(
+      {
+        'status_code' => '200',
+        'trending' => Post.trending
+      }
+    )
 
     JSON.generate(response)
   end

@@ -1,25 +1,23 @@
+require './controllers/response_generator'
 require './models/attachment'
 
 class AttachmentController
   def create(params)
-    attachment = nil
-
-    if params['post_id']
-      attachment = create_post_attachment(params)
-    elsif params['comment_id']
-      attachment = create_comment_attachment(params)
-    end
+    attachment =
+      if params['post_id']
+        create_post_attachment(params)
+      elsif params['comment_id']
+        create_comment_attachment(params)
+      end
 
     post = Post.find_by_id(attachment.post_id)
 
-    response = {}
-    if post && attachment.save
-      response['status_code'] = '201'
-      response['message'] = 'Successfully insert attachment to database'
-    else
-      response['status_code'] = '400'
-      response['message'] = 'Sorry! Creating new attachment is failed because invalid parameters'
-    end
+    response = 
+      if post && attachment.save
+        ResponseGenerator.success_response('Successfully insert attachment to database')
+      else
+        ResponseGenerator.failed_response('Sorry! Creating new attachment is failed because invalid parameters')
+      end
 
     JSON.generate(response)
   end

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require './database/db_connector'
 require './models/user'
 

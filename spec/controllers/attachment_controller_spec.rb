@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require './controllers/attachment_controller'
 require './controllers/user_controller'
 require './controllers/post_controller'

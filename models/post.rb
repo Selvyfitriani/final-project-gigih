@@ -95,9 +95,12 @@ class Post
     client = create_db_client
     raw_data = client.query('SELECT MAX(id) as id FROM posts')
 
+    id = 0
     raw_data.each do |datum|
-      return datum['id'].to_i
+      id = datum['id'].to_i
     end
+
+    id
   end
 
   def self.find_by_id(id)

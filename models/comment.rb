@@ -71,13 +71,16 @@ class Comment
     true
   end
 
-  def self.get_last_insert_id
-    client = create_db_client()
+  def self.last_insert_id
+    client = create_db_client
     raw_data = client.query('SELECT MAX(id) as id FROM comments')
 
+    id = 0
     raw_data.each do |datum|
-      return datum['id'].to_i
+      id = datum['id'].to_i
     end
+
+    id
   end
 
   def self.get_by_id(id)

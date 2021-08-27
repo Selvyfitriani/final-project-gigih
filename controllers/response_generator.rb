@@ -5,7 +5,7 @@ class ResponseGenerator
       response[key] = value
     end
 
-    response
+    JSON.generate(response)
   end
 
   def self.success_response(message)

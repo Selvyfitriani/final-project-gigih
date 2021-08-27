@@ -2,6 +2,7 @@ require './test_helper'
 require './database/db_connector'
 require './controllers/post_controller'
 require './controllers/user_controller'
+require './controllers/response_generator'
 require './models/post'
 
 describe PostController do
@@ -35,12 +36,8 @@ describe PostController do
         expected_post = Post.find_by_id(post_id)
         expect(expected_post).not_to be nil
 
-        expected_response = JSON.generate(
-          {
-            'status_code' => '201',
-            'message' => 'Successfully insert post to database'
-          }
-        )
+        expected_response = ResponseGenerator.success_response('Successfully insert post to database')
+
         expect(response).to eq(expected_response)
       end
     end
@@ -60,12 +57,8 @@ describe PostController do
         expected_post = Post.find_by_id(post_id)
         expect(expected_post).to be nil
 
-        expected_response = JSON.generate(
-          {
-            'status_code' => '400',
-            'message' => 'Sorry! Creating new post is failed because invalid parameters'
-          }
-        )
+        expected_response = ResponseGenerator.failed_response('Sorry! Creating new post is failed because invalid parameters')
+
         expect(response).to eq(expected_response)
       end
     end

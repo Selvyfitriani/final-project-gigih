@@ -12,14 +12,11 @@ class AttachmentController
 
     post = Post.find_by_id(attachment.post_id)
 
-    response = 
-      if post && attachment.save
-        ResponseGenerator.success_response('Successfully insert attachment to database')
-      else
-        ResponseGenerator.failed_response('Sorry! Creating new attachment is failed because invalid parameters')
-      end
-
-    JSON.generate(response)
+    if post && attachment.save
+      ResponseGenerator.success_response('Successfully insert attachment to database')
+    else
+      ResponseGenerator.failed_response('Sorry! Creating new attachment is failed because invalid parameters')
+    end
   end
 
   def create_post_attachment(params)

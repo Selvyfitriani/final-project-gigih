@@ -8,13 +8,10 @@ class CommentController
     user = User.get_by_id(comment.user_id)
     post = Post.find_by_id(comment.post_id)
 
-    response = 
-      if user && post && comment.save
-        ResponseGenerator.success_response('Successfully insert comment to database')
-      else
-        ResponseGenerator.failed_response('Sorry! Creating new comment is failed because invalid parameters')
-      end
-
-    JSON.generate(response)
+    if user && post && comment.save
+      ResponseGenerator.success_response('Successfully insert comment to database')
+    else
+      ResponseGenerator.failed_response('Sorry! Creating new comment is failed because invalid parameters')
+    end
   end
 end

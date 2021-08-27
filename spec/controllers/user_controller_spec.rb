@@ -21,7 +21,7 @@ describe UserController do
 
         response = controller.create(params)
 
-        user_id = User.get_last_insert_id()
+        user_id = User.last_insert_id
         expected_user = User.get_by_id(user_id)
         expect(expected_user).not_to be nil
 
@@ -46,7 +46,7 @@ describe UserController do
         controller = UserController.new
         response = controller.create(params)
 
-        user_id = User.get_last_insert_id()
+        user_id = User.last_insert_id
         expected_user = User.get_by_id(user_id)
         expect(expected_user).to be nil
 

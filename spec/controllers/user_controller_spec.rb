@@ -20,18 +20,12 @@ describe UserController do
         controller = UserController.new
 
         response = controller.create(params)
-
         user_id = User.last_insert_id
-        expected_user = User.get_by_id(user_id)
-        expect(expected_user).not_to be nil
+        user = User.find_by_id(user_id)
+        expect(user).not_to be nil
 
-        expected_response = JSON.generate(
-          {
-            'status_code' => '201',
-            'message' => 'Successfully insert user to database'
-          }
-        )
-        expect(response).to eq(expected_response)
+        expected_view = ERB.new(File.read('./views/success_create_user.erb')).result(binding)
+        expect(response).to eq(expected_view)
       end
     end
 
@@ -47,16 +41,11 @@ describe UserController do
         response = controller.create(params)
 
         user_id = User.last_insert_id
-        expected_user = User.get_by_id(user_id)
+        expected_user = User.find_by_id(user_id)
         expect(expected_user).to be nil
 
-        expected_response = JSON.generate(
-          {
-            'status_code' => '400',
-            'message' => 'Sorry! Creating new user is failed because invalid parameters'
-          }
-        )
-        expect(response).to eq(expected_response)
+        expected_view = ERB.new(File.read('./views/failed_create_user.erb')).result(binding)
+        expect(response).to eq(expected_view)
       end
     end
   end

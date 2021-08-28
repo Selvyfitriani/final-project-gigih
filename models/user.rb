@@ -1,7 +1,6 @@
 require "./database/db_connector"
 
 class User
-
   # Source valid email regex: https://www.youtube.com/watch?v=Ch-KRivqmzU
   # docs of regex: https://rubular.com/
 
@@ -64,13 +63,13 @@ class User
     id
   end
 
-  def self.get_by_id(id)
+  def self.find_by_id(id)
     client = create_db_client
     raw_data = client.query("SELECT * FROM users WHERE id = #{id}")
 
     user = nil
     raw_data.each do |datum|
-      user = User.new(datum['username'], datum['email'], datum['bio_description'])
+      user = User.new(datum['username'], datum['email'], datum['bio_description'], datum['id'])
     end
 
     user

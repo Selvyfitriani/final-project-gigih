@@ -116,7 +116,7 @@ class Post
     post
   end
 
-  def self.get_all_by_hashtag(hashtag)
+  def self.find_all_by_hashtag(hashtag)
     client = create_db_client
 
     raw_data = client.query("SELECT * FROM posts WHERE hashtags LIKE '%##{hashtag} %'")
@@ -144,7 +144,7 @@ class Post
   def self.trending
     hashtags_in_24_hours = find_all_hashtag_in_24_hours
 
-    counted_hashtag = get_counted_hashtag(hashtags_in_24_hours)
+    counted_hashtag = find_counted_hashtag(hashtags_in_24_hours)
     counted_hashtag = counted_hashtag.sort_by { |_, count| count }
     top_5_hashtag = counted_hashtag.last(5).reverse
 
@@ -199,7 +199,7 @@ class Post
     hashtags
   end
 
-  def self.get_counted_hashtag(hashtags)
+  def self.find_counted_hashtag(hashtags)
     counted_hashtag = {}
 
     hashtags.each do |hashtag|

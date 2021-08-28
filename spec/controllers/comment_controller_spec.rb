@@ -44,7 +44,7 @@ describe CommentController do
         response = comment_controller.create(comment_params)
 
         comment_id = Comment.last_insert_id
-        expected_comment = Comment.get_by_id(comment_id)
+        expected_comment = Comment.find_by_id(comment_id)
         expect(expected_comment).not_to be nil
 
         expected_response = ResponseGenerator.success_response('Successfully insert comment to database')
@@ -65,7 +65,7 @@ describe CommentController do
         response = comment_controller.create(comment_params)
 
         comment_id = Comment.last_insert_id
-        expected_comment = Comment.get_by_id(comment_id)
+        expected_comment = Comment.find_by_id(comment_id)
         expect(expected_comment).to be nil
 
         expected_response = ResponseGenerator.failed_response('Sorry! Creating new comment is failed because invalid parameters')

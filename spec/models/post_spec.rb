@@ -12,14 +12,9 @@ describe Post do
   describe '#valid?' do
     context 'when initialized with valid mandatory attributes value' do
       it 'should return true' do
-        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
-        user.save
-
-        post = Post.new(user.id, 'A new post', '2021-08-21 22:30:05')
+        post = Post.new(1, 'A new post', '2021-08-21 22:30:05')
 
         expect(post.valid?).to eq(true)
-
-        User.delete(user.id)
       end
     end
 
@@ -41,7 +36,7 @@ describe Post do
 
     context 'when initialized with too long text' do
       it 'should return false' do
-        post = Post.new(1, 'a'*1001, '2021-08-21 22:30:05')
+        post = Post.new(1, 'a' * 1001, '2021-08-21 22:30:05')
 
         expect(post.valid?).to eq(false)
       end
@@ -87,7 +82,7 @@ describe Post do
       it 'should return string with the hashtag' do
         post = Post.new(1, 'A new post #ini_hashtag', '2021-12-31 24:00:05')
 
-        hashtags = post.generate_hashtags()
+        hashtags = post.generate_hashtags
         expected_hashtags = '#ini_hashtag '
         expect(hashtags).to eq(expected_hashtags)
       end
@@ -97,7 +92,7 @@ describe Post do
       it 'should return string with the hashtag' do
         post = Post.new(1, 'A new post #middle_hashtag in my account', '2021-12-31 24:00:05')
 
-        hashtags = post.generate_hashtags()
+        hashtags = post.generate_hashtags
         expected_hashtags = '#middle_hashtag '
         expect(hashtags).to eq(expected_hashtags)
       end
@@ -107,7 +102,7 @@ describe Post do
       it 'should return only one hashtag' do
         post = Post.new(1, '#hashtag #hashtaG #hasHtag', '2021-12-31 24:00:05')
 
-        hashtags = post.generate_hashtags()
+        hashtags = post.generate_hashtags
         expected_hashtags = '#hashtag '
         expect(hashtags).to eq(expected_hashtags)
       end
@@ -117,7 +112,7 @@ describe Post do
   describe '#save' do
     context 'when given invalid input' do
       it 'should not save to database and return false' do
-        post = Post.new(1, 'A new post'*1000, '2021-08-21 22:30:05')
+        post = Post.new(1, 'A new post' * 1000, '2021-08-21 22:30:05')
 
         expect(post.save).to eq(false)
       end
@@ -185,11 +180,11 @@ describe Post do
     end
   end
 
-  describe '.get_all_by_hashtag' do 
+  describe '.find_all_by_hashtag' do 
     context 'when there are no posts that contain the hashtag' do
       it 'should return empty array' do
         search_hashtag = 'gigih'
-        posts = Post.get_all_by_hashtag(search_hashtag)
+        posts = Post.find_all_by_hashtag(search_hashtag)
 
         expected_posts = []
 
@@ -207,7 +202,7 @@ describe Post do
         post.save
 
         search_hashtag = 'gigih'
-        posts = Post.get_all_by_hashtag(search_hashtag)
+        posts = Post.find_all_by_hashtag(search_hashtag)
 
         dummy_database = double
         allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
@@ -227,7 +222,7 @@ describe Post do
         post.save
 
         search_hashtag = 'gig'
-        posts = Post.get_all_by_hashtag(search_hashtag)
+        posts = Post.find_all_by_hashtag(search_hashtag)
 
         dummy_database = double
         allow(Mysql2::Client).to receive(:new).and_return(dummy_database)
@@ -269,7 +264,6 @@ describe Post do
         user.save
 
         post = Post.new(user.id, 'A new post #gigih #semangat', (DateTime.now - 0.2).strftime('%F %T'))
-
         post.save
 
         trending_hashtags = Post.trending
@@ -281,17 +275,16 @@ describe Post do
 
     context 'when there are two comment with hashtags in one post' do
       it 'should rcount hashtags in post just one time' do
-        user = User.new('selvyfitriani31','selvyfitriani31@gmail.com',  'a learner', 1)
+        user = User.new('selvyfitriani31','selvyfitriani31@gmail.com', 'a learner', 1)
         user.save
 
         post = Post.new(user.id, 'A new post #gigih', (DateTime.now - 0.2).strftime('%F %T'), 1)
-
         post.save
 
         comment = Comment.new(user.id, post.id, 'A new comment #semangat')
         comment_num = 2
 
-        1.upto(comment_num) do |num|
+        1.upto(comment_num) do
           comment.save
         end
 
@@ -308,7 +301,6 @@ describe Post do
         user.save
 
         post = Post.new(user.id, 'A new post', (DateTime.now - 0.2).strftime('%F %T'), 1)
-
         post.save
 
         comment = Comment.new(user.id, post.id, 'A new comment #gigih')

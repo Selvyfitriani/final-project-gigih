@@ -64,13 +64,13 @@ describe PostController do
     end
   end
 
-  describe '#get_all_by_hashtag' do
+  describe '#find_all_by_hashtag' do
     context 'when there is no post that contain the hashtag' do
       it 'should return an empty list' do
         params = { 'hashtag' => 'gigih' }
 
         controller = PostController.new
-        response = controller.get_all_by_hashtag(params)
+        response = controller.find_all_by_hashtag(params)
 
         expected_response = JSON.generate(
           {
@@ -92,11 +92,11 @@ describe PostController do
         post.save
 
         params = { 'hashtag' => 'gigih' }
-        posts = Post.get_all_by_hashtag(params['hashtag'])
+        posts = Post.find_all_by_hashtag(params['hashtag'])
 
         controller = PostController.new
         json_posts = controller.transform_to_json(posts)
-        response = controller.get_all_by_hashtag(params)
+        response = controller.find_all_by_hashtag(params)
         expected_response = JSON.generate(
           {
             'status_code' => '200',
@@ -120,11 +120,11 @@ describe PostController do
         end
 
         params = { 'hashtag' => 'gigih' }
-        posts = Post.get_all_by_hashtag(params['hashtag'])
+        posts = Post.find_all_by_hashtag(params['hashtag'])
 
         controller = PostController.new
         json_posts = controller.transform_to_json(posts)
-        response = controller.get_all_by_hashtag(params)
+        response = controller.find_all_by_hashtag(params)
         expected_response = JSON.generate(
           {
             'status_code' => '200',
@@ -140,7 +140,7 @@ describe PostController do
     context 'when there is no post' do
       it 'should return empty array' do
         search_hashtag = 'gigih'
-        posts = Post.get_all_by_hashtag(search_hashtag)
+        posts = Post.find_all_by_hashtag(search_hashtag)
 
         controller = PostController.new
         json_posts = controller.transform_to_json(posts)
@@ -161,7 +161,7 @@ describe PostController do
 
         search_hashtag = 'gigih'
 
-        posts = Post.get_all_by_hashtag(search_hashtag)
+        posts = Post.find_all_by_hashtag(search_hashtag)
         controller = PostController.new
         json_posts = controller.transform_to_json(posts)
 
@@ -191,7 +191,7 @@ describe PostController do
 
         search_hashtag = 'gigih'
 
-        posts = Post.get_all_by_hashtag(search_hashtag)
+        posts = Post.find_all_by_hashtag(search_hashtag)
         controller = PostController.new
         json_posts = controller.transform_to_json(posts)
 

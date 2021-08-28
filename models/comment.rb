@@ -83,7 +83,7 @@ class Comment
     id
   end
 
-  def self.get_by_id(id)
+  def self.find_by_id(id)
     client = create_db_client
     raw_data = client.query("SELECT * FROM comments WHERE id = #{id}")
 

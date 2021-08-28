@@ -6,7 +6,7 @@ class PostController
   def create(params)
     post = Post.new(params['user_id'], params['text'], params['datetime'], params['id'])
 
-    user = User.get_by_id(post.user_id)
+    user = User.find_by_id(post.user_id)
 
     if user && post.save
       ResponseGenerator.success_response('Successfully insert post to database')
@@ -15,9 +15,9 @@ class PostController
     end
   end
 
-  def get_all_by_hashtag(params)
+  def find_all_by_hashtag(params)
     hashtag = params['hashtag']
-    posts = Post.get_all_by_hashtag(hashtag)
+    posts = Post.find_all_by_hashtag(hashtag)
 
     json_posts = []
     posts.each do |post|

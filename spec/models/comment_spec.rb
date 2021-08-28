@@ -13,14 +13,7 @@ describe Comment do
   describe '#valid?' do
     context 'when given valid attributes value' do
       it 'should return true' do
-        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
-        user.save
-
-        post = Post.new(user.id, 'A new post', '2021-08-21 22:30:05', 1)
-
-        post.save
-
-        comment = Comment.new( user.id, post.id, 'A new comment')
+        comment = Comment.new(1, 1, 'A new comment')
 
         expect(comment.valid?).to eq(true)
       end
@@ -28,14 +21,7 @@ describe Comment do
 
     context 'when given user id with alphabetical form' do
       it 'should return false' do
-        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
-        user.save
-
-        post = Post.new(user.id, 'A new post', '2021-08-21 22:30:05', 1)
-
-        post.save
-
-        comment = Comment.new('a', post.id, 'A new comment')
+        comment = Comment.new('a', 1, 'A new comment')
 
         expect(comment.valid?).to eq(false)
       end
@@ -43,26 +29,14 @@ describe Comment do
 
     context 'when given post id with alphabetical form' do
       it 'should return false' do
-        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
-        user.save
-
-        post = Post.new(user.id, 'A new post', '2021-08-21 22:30:05', 1)
-
-        post.save
-        comment = Comment.new(user.id, '', 'A new comment')
+        comment = Comment.new(1, 'a', 'A new comment')
         expect(comment.valid?).to eq(false)
       end
     end
 
     context 'when given empty text' do
       it 'should return false' do
-        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
-        user.save
-
-        post = Post.new(user.id,'A new post', '2021-08-21 22:30:05', 1)
-
-        post.save
-        comment = Comment.new(user.id, post.id, '')
+        comment = Comment.new(1, 1, '')
 
         expect(comment.valid?).to eq(false)
       end
@@ -70,13 +44,8 @@ describe Comment do
 
     context 'when given more than 1000 chars of text' do
       it 'should return false' do
-        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
-        user.save
+        comment = Comment.new(1, 1, 'A' * 1001)
 
-        post = Post.new(user.id,'A new post', '2021-08-21 22:30:05', 1)
-
-        post.save
-        comment = Comment.new( user.id, post.id, 'A' * 1001)
         expect(comment.valid?).to eq(false)
       end
     end
@@ -107,7 +76,7 @@ describe Comment do
       it 'should return only one hashtag' do
         comment = Comment.new(1, 1, '#hashtag #hashtaG #hasHtag')
 
-        hashtags = comment.generate_hashtags()
+        hashtags = comment.generate_hashtags
         expected_hashtags = '#hashtag '
         expect(hashtags).to eq(expected_hashtags)
       end
@@ -129,7 +98,6 @@ describe Comment do
         user.save
 
         post = Post.new(user.id, 'A new post', '2021-08-21 22:30:05', 1)
-
         post.save
 
         comment = Comment.new(user.id, post.id, 'A new comment')
@@ -148,8 +116,7 @@ describe Comment do
         user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
         user.save
 
-        post = Post.new(user.id,'A new post', '2021-08-21 22:30:05', 1)
-
+        post = Post.new(user.id, 'A new post', '2021-08-21 22:30:05', 1)
         post.save
 
         comment = Comment.new(user.id, post.id, 'A new comment #gigih')

@@ -2,16 +2,16 @@ require './database/db_connector'
 require './models/user'
 
 class Post
-  attr_accessor :id, :user_id, :text, :datetime
+  attr_accessor :id, :user_id, :text, :datetime, :hashtags
 
   VALID_DATETIME_REGEX = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.freeze
 
-  def initialize(user_id, text, datetime, id = nil)
+  def initialize(user_id, text, datetime, id = nil, hashtags = '')
     @id = id
     @user_id = user_id
     @text = text
     @datetime = datetime
-    @hashtags = ''
+    @hashtags = hashtags
   end
 
   def valid?
@@ -104,13 +104,15 @@ class Post
   end
 
   def self.find_by_id(id)
+    return nil if id.to_i <= 0
+
     client = create_db_client
     raw_data = client.query("SELECT * FROM posts WHERE id = #{id}")
 
     post = nil
 
     raw_data.each do |datum|
-      post = Post.new(datum['user_id'], datum['text'], datum['datetime'])
+      post = Post.new(datum['user_id'], datum['text'], datum['datetime'], datum['id'], datum['hashtags'])
     end
 
     post

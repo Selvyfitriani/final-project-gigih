@@ -1,6 +1,6 @@
 class Attachment
 
-  attr_accessor :filename, :type, :post_id, :comment_id
+  attr_accessor :id, :filename, :type, :post_id, :comment_id
 
   def initialize(filename, type, post_id = nil, comment_id = nil, id = nil)
     @filename = filename
@@ -59,13 +59,15 @@ class Attachment
   end
 
   def self.find_by_id(id)
+    return nil if id.to_i <= 0
+    
     client = create_db_client
     raw_data = client.query("SELECT * FROM attachments WHERE id = #{id}")
 
     attachment = nil
 
     raw_data.each do |datum|
-      attachment = Attachment.new(datum['filename'], datum['type'], datum['post_id'])
+      attachment = Attachment.new(datum['filename'], datum['type'], datum['post_id'], datum['comment_id'], datum['id'])
     end
 
     attachment

@@ -8,11 +8,16 @@ class PostController
 
     user = User.find_by_id(post.user_id)
 
+    rendered = nil
     if user && post.save
-      ResponseGenerator.success_response('Successfully insert post to database')
+      post_id = Post.last_insert_id
+      post = Post.find_by_id(post_id)
+
+      rendered = ERB.new(File.read('./views/success_create_post.erb'))
     else
-      ResponseGenerator.failed_response('Sorry! Creating new post is failed because invalid parameters')
+      rendered = ERB.new(File.read('./views/failed_create_post.erb'))
     end
+    rendered.result(binding)
   end
 
   def find_all_by_hashtag(params)

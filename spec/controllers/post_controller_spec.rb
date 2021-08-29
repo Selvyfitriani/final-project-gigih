@@ -6,7 +6,7 @@ require './controllers/response_generator'
 require './models/post'
 
 describe PostController do
-  before (:each) do
+  before(:each) do
     client = create_db_client
     client.query('DELETE FROM users')
     client.query('DELETE FROM posts')
@@ -32,13 +32,13 @@ describe PostController do
         post_controller = PostController.new
         response = post_controller.create(post_params)
 
-        post_id = Post.last_insert_id()
-        expected_post = Post.find_by_id(post_id)
-        expect(expected_post).not_to be nil
+        post_id = Post.last_insert_id
+        post = Post.find_by_id(post_id)
+        expect(post).not_to be nil
 
-        expected_response = ResponseGenerator.success_response('Successfully insert post to database')
+        expected_view = ERB.new(File.read('./views/success_create_post.erb')).result(binding)
 
-        expect(response).to eq(expected_response)
+        expect(response).to eq(expected_view)
       end
     end
 
@@ -57,9 +57,9 @@ describe PostController do
         expected_post = Post.find_by_id(post_id)
         expect(expected_post).to be nil
 
-        expected_response = ResponseGenerator.failed_response('Sorry! Creating new post is failed because invalid parameters')
+        expected_view = ERB.new(File.read('./views/failed_create_post.erb')).result(binding)
 
-        expect(response).to eq(expected_response)
+        expect(response).to eq(expected_view)
       end
     end
   end

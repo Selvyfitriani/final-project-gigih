@@ -45,25 +45,20 @@ describe AttachmentController do
         attachment = Attachment.find_by_id(attachment_id)
         expect(attachment).not_to be nil
 
-        expected_response = JSON.generate(
-          {
-            'status_code' => '201',
-            'message' => 'Successfully insert attachment to database'
-          }
-        )
-        expect(response).to eq(expected_response)
+        expected_view = ERB.new(File.read('./views/success_create_post_attachment.erb')).result(binding)
+        expect(response).to eq(expected_view)
       end
     end
 
     context 'when given valid parameters for attachment comment' do
       it 'should save to database and return success json' do
-        user_controller = UserController.new
         user_params = {
           'id' => 1,
           'username' => 'selvyfitriani31',
           'email' => 'selvyfitriani31@gmail.com',
           'bio_description' => 'a learner'
         }
+        user_controller = UserController.new
         user_controller.create(user_params)
 
         post_params = {
@@ -83,7 +78,7 @@ describe AttachmentController do
         }
         comment_controller = CommentController.new
         comment_controller.create(comment_params)
- 
+      
         attachment_params = {
           'filename' => 'filename.png',
           'type' => 'image/png',
@@ -97,13 +92,9 @@ describe AttachmentController do
         attachment = Attachment.find_by_id(attachment_id)
         expect(attachment).not_to be nil
 
-        expected_response = JSON.generate(
-          {
-            'status_code' => '201',
-            'message' => 'Successfully insert attachment to database'
-          }
-        )
-        expect(response).to eq(expected_response)
+        expected_view = ERB.new(File.read('./views/success_create_comment_attachment.erb')).result(binding)
+
+        expect(response).to eq(expected_view)
       end
     end
   end

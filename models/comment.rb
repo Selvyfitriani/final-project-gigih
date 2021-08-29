@@ -1,13 +1,13 @@
 class Comment
 
-  attr_accessor :user_id, :post_id, :text
+  attr_accessor :id, :user_id, :post_id, :text, :hashtags
 
-  def initialize(user_id, post_id, text, id = nil)
+  def initialize(user_id, post_id, text, id = nil, hashtags = '')
     @id = id
     @user_id = user_id
     @post_id = post_id
     @text = text
-    @hashtags = ''
+    @hashtags = hashtags
   end
 
   def valid?
@@ -65,8 +65,14 @@ class Comment
     generate_hashtags
 
     client = create_db_client
-    client.query("INSERT INTO comments(user_id, post_id, text, hashtags)
+
+    if @id
+      client.query("INSERT INTO comments(id, user_id, post_id, text, hashtags)
+          VALUES(#{@id}, #{@user_id}, #{@post_id}, '#{@text}', '#{@hashtags}')")
+    else
+      client.query("INSERT INTO comments(user_id, post_id, text, hashtags)
           VALUES(#{@user_id}, #{@post_id}, '#{@text}', '#{@hashtags}')")
+    end
 
     true
   end
@@ -84,13 +90,15 @@ class Comment
   end
 
   def self.find_by_id(id)
+    return nil if id.to_i <= 0
+    
     client = create_db_client
     raw_data = client.query("SELECT * FROM comments WHERE id = #{id}")
 
     comment = nil
 
     raw_data.each do |datum|
-      comment = Comment.new(datum['user_id'], datum['post_id'], datum['text'])
+      comment = Comment.new(datum['user_id'], datum['post_id'], datum['text'], datum['id'], datum['hashtags'])
     end
 
     comment

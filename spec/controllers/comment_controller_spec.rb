@@ -44,12 +44,12 @@ describe CommentController do
         response = comment_controller.create(comment_params)
 
         comment_id = Comment.last_insert_id
-        expected_comment = Comment.find_by_id(comment_id)
-        expect(expected_comment).not_to be nil
+        comment = Comment.find_by_id(comment_id)
+        expect(comment).not_to be nil
 
-        expected_response = ResponseGenerator.success_response('Successfully insert comment to database')
+        expected_view = ERB.new(File.read('./views/success_create_comment.erb')).result(binding)
 
-        expect(response).to eq(expected_response)
+        expect(response).to eq(expected_view)
       end
     end
 
@@ -65,11 +65,11 @@ describe CommentController do
         response = comment_controller.create(comment_params)
 
         comment_id = Comment.last_insert_id
-        expected_comment = Comment.find_by_id(comment_id)
-        expect(expected_comment).to be nil
+        comment = Comment.find_by_id(comment_id)
+        expect(comment).to be nil
 
-        expected_response = ResponseGenerator.failed_response('Sorry! Creating new comment is failed because invalid parameters')
-        expect(response).to eq(expected_response)
+        expected_view = ERB.new(File.read('./views/failed_create_comment.erb')).result(binding)
+        expect(response).to eq(expected_view)
       end
     end
   end

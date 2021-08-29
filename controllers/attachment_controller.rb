@@ -1,4 +1,3 @@
-require './controllers/response_generator'
 require './models/attachment'
 
 class AttachmentController
@@ -23,7 +22,7 @@ class AttachmentController
     elsif comment && attachment.save
       attachment_id = Attachment.last_insert_id
       attachment = Attachment.find_by_id(attachment_id)
-      
+
       rendered = ERB.new(File.read('./views/success_create_comment_attachment.erb'))
     end
 

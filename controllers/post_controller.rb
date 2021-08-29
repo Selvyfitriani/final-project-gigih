@@ -1,4 +1,3 @@
-require './controllers/response_generator'
 require 'json'
 require './models/post'
 
@@ -32,17 +31,6 @@ class PostController
 
     rendered = ERB.new(File.read('./views/posts_by_hashtag.erb'))
     rendered.result(binding)
-  end
-
-  def transform_to_json(posts)
-    json_posts = []
-
-    posts.each do |post|
-      json_post = post.to_json
-      json_posts << json_post
-    end
-
-    json_posts
   end
 
   def trending

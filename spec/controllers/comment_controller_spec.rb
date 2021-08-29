@@ -3,8 +3,6 @@ require './database/db_connector'
 require './controllers/user_controller'
 require './controllers/post_controller'
 require './controllers/comment_controller'
-require './controllers/response_generator'
-
 
 describe CommentController do
   before(:each) do

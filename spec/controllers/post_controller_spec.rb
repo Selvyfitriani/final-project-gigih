@@ -2,7 +2,6 @@ require './test_helper'
 require './database/db_connector'
 require './controllers/post_controller'
 require './controllers/user_controller'
-require './controllers/response_generator'
 require './models/post'
 
 describe PostController do
@@ -84,88 +83,6 @@ describe PostController do
 
         expected_view = ERB.new(File.read('./views/posts_by_hashtag.erb')).result(binding)
         expect(response).to eq(expected_view)
-      end
-    end
-  end
-
-  describe '#transform_to_json' do
-    context 'when there is no post' do
-      it 'should return empty array' do
-        search_hashtag = 'gigih'
-        posts = Post.find_all_by_hashtag(search_hashtag)
-
-        controller = PostController.new
-        json_posts = controller.transform_to_json(posts)
-
-        expected_json_posts = []
-
-        expect(json_posts).to eq(expected_json_posts)
-      end
-    end
-
-    context 'when there is one post' do
-      it 'should return list of detail post in json format' do
-        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
-        user.save
-
-        post = Post.new(user.id, 'I am a superhero #gigih #Semangat', '2021-08-21 22:30:05')
-        post.save
-
-        search_hashtag = 'gigih'
-
-        posts = Post.find_all_by_hashtag(search_hashtag)
-        controller = PostController.new
-        json_posts = controller.transform_to_json(posts)
-
-        expected_json_posts = [
-          {
-            'user_id' => post.user_id,
-            'text' => post.text,
-            'datetime' => post.datetime
-          }
-        ]
-
-        expect(json_posts).to eq(expected_json_posts)
-      end
-    end
-
-    context 'when there are more than one post' do
-      it 'should return list of detail posts in json format' do
-        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
-        user.save
-
-        post = Post.new(user.id, 'I am a superhero #gigih #Semangat', '2021-08-21 22:30:05')
-
-        post_num = 3
-        1.upto(post_num) do
-          post.save
-        end
-
-        search_hashtag = 'gigih'
-
-        posts = Post.find_all_by_hashtag(search_hashtag)
-        controller = PostController.new
-        json_posts = controller.transform_to_json(posts)
-
-        expected_json_posts = [
-          {
-            'user_id' => post.user_id,
-            'text' => post.text,
-            'datetime' => post.datetime
-          },
-          {
-            'user_id' => post.user_id,
-            'text' => post.text,
-            'datetime' => post.datetime
-          },
-          {
-            'user_id' => post.user_id,
-            'text' => post.text,
-            'datetime' => post.datetime
-          }
-        ]
-
-        expect(json_posts).to eq(expected_json_posts)
       end
     end
   end

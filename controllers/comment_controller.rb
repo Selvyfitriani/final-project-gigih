@@ -1,4 +1,3 @@
-require './controllers/response_generator'
 require './models/comment'
 
 class CommentController

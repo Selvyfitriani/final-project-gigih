@@ -60,7 +60,7 @@ class Attachment
 
   def self.find_by_id(id)
     return nil if id.to_i <= 0
-    
+
     client = create_db_client
     raw_data = client.query("SELECT * FROM attachments WHERE id = #{id}")
 

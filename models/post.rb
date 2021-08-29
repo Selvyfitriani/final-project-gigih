@@ -126,7 +126,7 @@ class Post
     posts = []
 
     raw_data.each do |datum|
-      post = Post.new(datum['user_id'], datum['text'], datum['datetime'])
+      post = Post.new(datum['user_id'], datum['text'], datum['datetime'], datum['id'], datum['hashtags'])
       posts.push(post)
     end
 

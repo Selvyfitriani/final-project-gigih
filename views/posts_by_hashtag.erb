@@ -1,0 +1,13 @@
+{
+  'status_code' => '200',
+  'posts' => [
+    <% posts.each do |post| %>
+    {
+        'id': <%= post.id %>,
+        'user_id': <%= post.user_id %>,
+        'datetime': <%= post.datetime %>,
+        'text': <%= post.text %>,
+        'hashtags': <%= post.hashtags %>
+    } <% end %> 
+  ]
+}

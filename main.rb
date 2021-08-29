@@ -20,7 +20,7 @@ end
 
 get '/posts/:hashtag' do
   controller = PostController.new
-  controller.get_all_by_hashtag(params)
+  controller.find_all_by_hashtag(params)
 end
 
 post '/comments/create' do

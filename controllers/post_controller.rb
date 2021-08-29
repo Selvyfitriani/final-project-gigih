@@ -30,12 +30,8 @@ class PostController
       json_posts << json_post
     end
 
-    response = ResponseGenerator.create_response(
-      {
-        'status_code' => '200',
-        'posts' => json_posts
-      }
-    )
+    rendered = ERB.new(File.read('./views/posts_by_hashtag.erb'))
+    rendered.result(binding)
   end
 
   def transform_to_json(posts)

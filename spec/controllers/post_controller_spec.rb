@@ -65,55 +65,12 @@ describe PostController do
   end
 
   describe '#find_all_by_hashtag' do
-    context 'when there is no post that contain the hashtag' do
-      it 'should return an empty list' do
-        params = { 'hashtag' => 'gigih' }
-
-        controller = PostController.new
-        response = controller.find_all_by_hashtag(params)
-
-        expected_response = JSON.generate(
-          {
-            'status_code' => '200',
-            'posts' => []
-          }
-        )
-
-        expect(response).to eq(expected_response)
-      end
-    end
-
-    context 'when there is one post that contain hashtag' do
-      it 'should return the post in a list' do
+    context 'when given hashtags' do
+      it 'should return views that contain the related posts' do
         user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
         user.save
 
         post = Post.new(user.id, 'I am a superhero #gigih #Semangat', '2021-08-21 22:30:05')
-        post.save
-
-        params = { 'hashtag' => 'gigih' }
-        posts = Post.find_all_by_hashtag(params['hashtag'])
-
-        controller = PostController.new
-        json_posts = controller.transform_to_json(posts)
-        response = controller.find_all_by_hashtag(params)
-        expected_response = JSON.generate(
-          {
-            'status_code' => '200',
-            'posts' => json_posts
-          }
-        )
-        expect(response).to eq(expected_response)
-      end
-    end
-
-    context 'when there are more than one post' do
-      it 'should return list of posts in json format' do
-        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
-        user.save
-
-        post = Post.new(user.id, 'I am a superhero #gigih #Semangat', '2021-08-21 22:30:05')
-
         post_num = 3
         1.upto(post_num) do
           post.save
@@ -123,15 +80,10 @@ describe PostController do
         posts = Post.find_all_by_hashtag(params['hashtag'])
 
         controller = PostController.new
-        json_posts = controller.transform_to_json(posts)
         response = controller.find_all_by_hashtag(params)
-        expected_response = JSON.generate(
-          {
-            'status_code' => '200',
-            'posts' => json_posts
-          }
-        )
-        expect(response).to eq(expected_response)
+
+        expected_view = ERB.new(File.read('./views/posts_by_hashtag.erb')).result(binding)
+        expect(response).to eq(expected_view)
       end
     end
   end

@@ -1,0 +1,10 @@
+{
+  'status_code' => '200',
+  'trending' =>  
+  [
+    <% trending_hashtags.each do |hashtag| %>
+    {
+        'hashtag': <%= hashtag %>
+    } <% end %> 
+  ]
+}

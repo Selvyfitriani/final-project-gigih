@@ -171,48 +171,8 @@ describe PostController do
   end
 
   describe '#trending' do
-    context 'when there is no trending hashtag' do
-      it 'should return response with empty list' do
-        controller = PostController.new
-        response = controller.trending
-
-        expected_response = JSON.generate(
-          {
-            'status_code' => '200',
-            'trending' => []
-          }
-        )
-
-        expect(response).to eq(expected_response)
-      end
-    end
-
-    context 'when there is one trending hashtag' do
-      it 'should return response with list of hashtag' do
-        user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
-        user.save
-
-        post = Post.new(user.id, 'I am a superhero #gigih', '2021-08-21 22:30:05')
-
-        post.save
-
-        trending_hashtags = Post.trending
-        controller = PostController.new
-        response = controller.trending
-
-        expected_response = JSON.generate(
-          {
-            'status_code' => '200',
-            'trending' => trending_hashtags
-          }
-        )
-
-        expect(response).to eq(expected_response)
-      end
-    end
-
-    context 'when there are more than one trending hashtag' do
-      it 'should return response with list of hashtags' do
+    context 'when there are trending hashtag' do
+      it 'should return views that contain the related post' do
         user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
         user.save
 
@@ -227,14 +187,9 @@ describe PostController do
         controller = PostController.new
         response = controller.trending
 
-        expected_response = JSON.generate(
-          {
-            'status_code' => '200',
-            'trending' => trending_hashtags
-          }
-        )
+        expected_view = ERB.new(File.read('./views/trending_hashtags.erb')).result(binding)
 
-        expect(response).to eq(expected_response)
+        expect(response).to eq(expected_view)
       end
     end
   end

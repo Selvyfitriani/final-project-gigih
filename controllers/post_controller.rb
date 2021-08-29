@@ -46,13 +46,9 @@ class PostController
   end
 
   def trending
-    response = ResponseGenerator.create_response(
-      {
-        'status_code' => '200',
-        'trending' => Post.trending
-      }
-    )
+    trending_hashtags = Post.trending
+    rendered = ERB.new(File.read('./views/trending_hashtags.erb'))
 
-    response
+    rendered.result(binding)
   end
 end

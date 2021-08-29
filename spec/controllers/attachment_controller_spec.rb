@@ -78,7 +78,7 @@ describe AttachmentController do
         }
         comment_controller = CommentController.new
         comment_controller.create(comment_params)
-      
+
         attachment_params = {
           'filename' => 'filename.png',
           'type' => 'image/png',

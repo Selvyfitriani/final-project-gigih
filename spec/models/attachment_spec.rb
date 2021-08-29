@@ -51,7 +51,7 @@ describe Attachment do
       end
     end
 
-    context 'when given valid  attachment for a post' do
+    context 'when given valid  attachment for a comment' do
       it 'should save to database and return true' do
         user = User.new('selvyfitriani31', 'selvyfitriani31@gmail.com', 'a learner', 1)
         user.save

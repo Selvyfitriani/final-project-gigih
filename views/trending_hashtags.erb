@@ -2,9 +2,10 @@
   'status_code' => '200',
   'trending' =>  
   [
-    <% trending_hashtags.each do |hashtag| %>
+    <% trending_hashtags.each do |hashtag, number| %>
     {
         'hashtag': <%= hashtag %>
+        'number': <%= number %>
     } <% end %> 
   ]
 }

@@ -150,9 +150,9 @@ class Post
     counted_hashtag = counted_hashtag.sort_by { |_, count| count }
     top_5_hashtag = counted_hashtag.last(5).reverse
 
-    trending_hashtags = []
-    top_5_hashtag.each do |hashtag, _|
-      trending_hashtags << hashtag
+    trending_hashtags = {}
+    top_5_hashtag.each do |hashtag, num|
+      trending_hashtags[hashtag] = num
     end
 
     trending_hashtags

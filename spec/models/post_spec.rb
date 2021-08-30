@@ -252,7 +252,7 @@ describe Post do
         post.save
 
         trending_hashtags = Post.trending
-        expected_trending_hashtags = ['#gigih']
+        expected_trending_hashtags = { '#gigih' => 1 }
 
         expect(trending_hashtags).to eq(expected_trending_hashtags)
       end
@@ -267,7 +267,7 @@ describe Post do
         post.save
 
         trending_hashtags = Post.trending
-        expected_trending_hashtags = ['#semangat','#gigih']
+        expected_trending_hashtags = {'#semangat' => 1, '#gigih' => 1}
 
         expect(trending_hashtags).to eq(expected_trending_hashtags)
       end
@@ -289,7 +289,7 @@ describe Post do
         end
 
         trending_hashtags = Post.trending
-        expected_trending_hashtags = ['#semangat', '#gigih']
+        expected_trending_hashtags = {'#semangat' => 2, '#gigih' => 1}
 
         expect(trending_hashtags).to eq(expected_trending_hashtags)
       end
@@ -307,7 +307,7 @@ describe Post do
         comment.save
 
         trending_hashtags = Post.trending
-        expected_trending_hashtags = ['#gigih']
+        expected_trending_hashtags = {'#gigih' => 1}
 
         expect(trending_hashtags).to eq(expected_trending_hashtags)
       end

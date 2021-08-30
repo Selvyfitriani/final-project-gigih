@@ -27,3 +27,13 @@ post '/comments/create' do
   controller = CommentController.new
   controller.create(params)
 end
+
+post '/attachment/create' do
+  filename = params['attachment']['filename']
+  tempfile = params['attachment']['tempfile']
+  path = '/home/selvy/Documents/gigih/final-project-gigih/uploads'
+
+  File.open(File.join(path, filename.to_s), 'wb') do |file|
+    file.write(tempfile.read)
+  end
+end

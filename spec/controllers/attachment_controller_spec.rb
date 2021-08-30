@@ -23,23 +23,22 @@ describe AttachmentController do
         }
         user_controller.create(user_params)
 
-        post_params = {
+        params = {
           'id' => 1,
           'user_id' => user_params['id'],
           'text' => 'A new post',
-          'datetime' => '2021-08-21 22:30:05'
-        }
-        post_controller = PostController.new
-        post_controller.create(post_params)
- 
-        attachment_params = {
-          'filename' => 'filename.png',
-          'type' => 'image/png',
-          'post_id' => post_params['id']
+          'datetime' => '2021-08-21 22:30:05',
+          'attachment' => {
+            'filename' => 'filename.png',
+            'type' => 'image/png'
+          }
         }
 
+        post_controller = PostController.new
+        post_controller.create(params)
+
         attachment_controller = AttachmentController.new
-        attachment_controller.create(attachment_params)
+        attachment_controller.create(params)
       end
     end
 
@@ -63,23 +62,21 @@ describe AttachmentController do
         post_controller = PostController.new
         post_controller.create(post_params)
 
-        comment_params = {
+        params = {
           'id' => 1,
           'user_id' => user_params['id'],
           'post_id' => post_params['id'],
-          'text' => 'A new comment'
+          'text' => 'A new comment',
+          'attachment' => {
+            'filename' => 'filename.png',
+            'type' => 'image/png'
+          }
         }
         comment_controller = CommentController.new
-        comment_controller.create(comment_params)
-
-        attachment_params = {
-          'filename' => 'filename.png',
-          'type' => 'image/png',
-          'comment_id' => comment_params['id']
-        }
+        comment_controller.create(params)
 
         attachment_controller = AttachmentController.new
-        attachment_controller.create(attachment_params)
+        attachment_controller.create(params)
       end
     end
   end

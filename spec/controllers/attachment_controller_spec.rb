@@ -39,14 +39,7 @@ describe AttachmentController do
         }
 
         attachment_controller = AttachmentController.new
-        response = attachment_controller.create(attachment_params)
-
-        attachment_id = Attachment.last_insert_id
-        attachment = Attachment.find_by_id(attachment_id)
-        expect(attachment).not_to be nil
-
-        expected_view = ERB.new(File.read('./views/success_create_post_attachment.erb')).result(binding)
-        expect(response).to eq(expected_view)
+        attachment_controller.create(attachment_params)
       end
     end
 
@@ -86,15 +79,7 @@ describe AttachmentController do
         }
 
         attachment_controller = AttachmentController.new
-        response = attachment_controller.create(attachment_params)
-
-        attachment_id = Attachment.last_insert_id
-        attachment = Attachment.find_by_id(attachment_id)
-        expect(attachment).not_to be nil
-
-        expected_view = ERB.new(File.read('./views/success_create_comment_attachment.erb')).result(binding)
-
-        expect(response).to eq(expected_view)
+        attachment_controller.create(attachment_params)
       end
     end
   end

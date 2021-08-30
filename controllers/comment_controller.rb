@@ -1,3 +1,4 @@
+require './controllers/attachment_controller'
 require './models/comment'
 
 class CommentController
@@ -10,6 +11,12 @@ class CommentController
     if user && post && comment.save
       comment_id = Comment.last_insert_id
       comment = Comment.find_by_id(comment_id)
+
+      params['comment_id'] = comment_id
+      if params['attachment']
+        attachment_controller = AttachmentController.new
+        attachment_controller.create(params)
+      end
 
       rendered = ERB.new(File.read('./views/success_create_comment.erb'))
     else

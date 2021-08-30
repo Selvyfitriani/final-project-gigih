@@ -1,4 +1,5 @@
 require 'json'
+require './controllers/attachment_controller'
 require './models/post'
 
 class PostController
@@ -11,6 +12,12 @@ class PostController
     if user && post.save
       post_id = Post.last_insert_id
       post = Post.find_by_id(post_id)
+
+      params['post_id'] = post_id
+      if params['attachment']
+        attachment_controller = AttachmentController.new
+        attachment_controller.create(params)
+      end
 
       rendered = ERB.new(File.read('./views/success_create_post.erb'))
     else

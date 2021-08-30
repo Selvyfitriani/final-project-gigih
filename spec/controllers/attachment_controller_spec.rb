@@ -30,7 +30,8 @@ describe AttachmentController do
           'datetime' => '2021-08-21 22:30:05',
           'attachment' => {
             'filename' => 'filename.png',
-            'type' => 'image/png'
+            'type' => 'image/png',
+            'tempfile' => Tempfile.new('filename.png', '/home/selvy/Documents/gigih/final-project-gigih/uploads')
           }
         }
 
@@ -69,7 +70,8 @@ describe AttachmentController do
           'text' => 'A new comment',
           'attachment' => {
             'filename' => 'filename.png',
-            'type' => 'image/png'
+            'type' => 'image/png',
+            'tempfile' => Tempfile.new('filename.png', '/home/selvy/Documents/gigih/final-project-gigih/uploads')
           }
         }
         comment_controller = CommentController.new

@@ -1,4 +1,5 @@
 require './models/attachment'
+require 'tempfile'
 
 class AttachmentController
   def create(params)
@@ -7,6 +8,8 @@ class AttachmentController
     elsif params['comment_id']
       create_comment_attachment(params)
     end
+
+    save_attachment(params['attachment'])
   end
 
   def save_attachment(params)
